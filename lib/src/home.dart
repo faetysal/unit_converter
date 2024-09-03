@@ -18,7 +18,9 @@ class Home extends StatelessWidget {
         children: [
           Container(
             height: 60,
-            color: Colors.orange,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            margin: const EdgeInsets.only(bottom: 10),
+            // color: Colors.orange,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: 12,
@@ -44,23 +46,31 @@ class Home extends StatelessWidget {
           ),
           Expanded(
             child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   return Column(
                     children: [
                       Container(
                         height: constraints.maxHeight / 2,
+                        padding: const EdgeInsets.only(top: 8),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(color: Colors.grey),
+                            bottom: BorderSide(color: Colors.grey)
+                          )
+                        ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
                               alignment: Alignment.centerLeft,
-                              color: Colors.yellow,
+                              // color: Colors.yellow,
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton2(
                                   customButton: Row(
                                     children: [
-                                      Text('Option 1'),
+                                      Text('Input'),
                                       Icon(Icons.arrow_drop_down)
                                     ],
                                   ),
@@ -81,15 +91,68 @@ class Home extends StatelessWidget {
                             ),
                             Container(
                               height: 60,
-                              color: Colors.lightBlueAccent,
-                              child: TextField(textAlign: TextAlign.end,),
+                              child: TextField(
+                                textAlign: TextAlign.end,
+                                keyboardType: TextInputType.none,
+                                decoration: InputDecoration(
+                                  focusedBorder: InputBorder.none,
+                                  border: InputBorder.none
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ),
                       Container(
                         height: constraints.maxHeight / 2,
-                        color: Colors.blue,
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              // color: Colors.yellow,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton2(
+                                  customButton: Row(
+                                    children: [
+                                      Text('Output'),
+                                      Icon(Icons.arrow_drop_down)
+                                    ],
+                                  ),
+                                  items: [
+                                    DropdownMenuItem(child: Text('Option 1'), value: '1'),
+                                    DropdownMenuItem(child: Text('Option 2'), value: '2',),
+                                  ],
+                                  onChanged: (v) {},
+                                  isDense: true,
+                                  dropdownStyleData: DropdownStyleData(
+                                    width: MediaQuery.of(context).size.width * .7,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8)
+                                    )
+                                  ),
+                                )
+                              ),
+                            ),
+                            Container(
+                              height: 60,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: Colors.grey)
+                                )
+                              ),
+                              child: TextField(
+                                textAlign: TextAlign.end,
+                                keyboardType: TextInputType.none,
+                                decoration: InputDecoration(
+                                  focusedBorder: InputBorder.none,
+                                  border: InputBorder.none
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   );
