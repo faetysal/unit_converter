@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 
@@ -11,6 +12,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeController controller = Get.put(HomeController());
+
     List<Quantity> quantities = [
       Quantity(id: 1, title: 'Length', icon: HugeIcons.strokeRoundedRuler, type: QuantityType.length),
       Quantity(id: 2, title: 'Area', icon: HugeIcons.strokeRoundedBoundingBox, type: QuantityType.area),
@@ -39,11 +42,13 @@ class Home extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             margin: const EdgeInsets.only(top: 5, bottom: 10),
             // color: Colors.orange,
-            child: SelectorList(
-              value: QuantityType.temperature, 
-              onChanged: (v) {},
+            child: Obx(() => SelectorList(
+              value: controller.quantityType.value,
+              onChanged: (v) {
+                controller.quantityType.value = v;
+              },
               children: quantities,
-            )
+            ))
           ),
           Expanded(
             child: Container(
@@ -215,4 +220,8 @@ class Home extends StatelessWidget {
       ))),
     );
   }
+}
+
+class HomeController extends GetxController {
+  Rx<QuantityType> quantityType = QuantityType.length.obs;
 }
