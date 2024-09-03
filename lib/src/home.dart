@@ -1,10 +1,23 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    List<Quantity> quantities = [
+      Quantity(id: 1, title: 'Length', icon: HugeIcons.strokeRoundedRuler),
+      Quantity(id: 2, title: 'Area', icon: HugeIcons.strokeRoundedBoundingBox),
+      Quantity(id: 3, title: 'Temperature', icon: HugeIcons.strokeRoundedTemperature),
+      Quantity(id: 4, title: 'Volume', icon: HugeIcons.strokeRoundedDroplet),
+      Quantity(id: 5, title: 'Mass', icon: HugeIcons.strokeRoundedWeightScale01),
+      Quantity(id: 6, title: 'Data', icon: HugeIcons.strokeRoundedDatabase),
+      Quantity(id: 7, title: 'Speed', icon: HugeIcons.strokeRoundedDashboardSpeed02),
+      Quantity(id: 8, title: 'Time', icon: HugeIcons.strokeRoundedClock02),
+      Quantity(id: 9, title: 'Tip', icon: HugeIcons.strokeRoundedTips)
+    ];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -19,28 +32,15 @@ class Home extends StatelessWidget {
           Container(
             height: 60,
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            margin: const EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(top: 5, bottom: 10),
             // color: Colors.orange,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemCount: 12,
+              itemCount: quantities.length,
               separatorBuilder: (context, index) => const SizedBox(width: 8),
               itemBuilder: (context, index) {
-                return Container(
-                  width: 80,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.green)
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.circle, size: 30,),
-                      const SizedBox(height: 4),
-                      Text('Title')
-                    ],
-                  ),
-                );
+                final quantity = quantities[index];
+                return _buildSelectorItem(quantity);
               },
             )
           ),
@@ -206,6 +206,34 @@ class Home extends StatelessWidget {
     );
   }
 
+  Widget _buildSelectorItem(Quantity q) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 4),
+      width: 100,
+      height: 40,
+      decoration: BoxDecoration(
+        color: Colors.white
+        // border: Border.all(color: Colors.green)
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(q.icon, size: 30,),
+          const SizedBox(height: 4),
+          Container(
+            alignment: Alignment.center,
+            width: double.infinity,
+            //color: Colors.grey,
+            child: Text(q.title, style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold
+            ))
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _buildInputBtn(String text) {
     return Container(
       width: 80,
@@ -213,4 +241,18 @@ class Home extends StatelessWidget {
       child: Center(child: Text(text)),
     );
   }
+}
+
+class Quantity {
+  final int? _id;
+  String title;
+  IconData? icon;
+
+  Quantity({
+    int? id,
+    this.title = '',
+    this.icon
+  }): _id = id;
+
+  int? get id => _id;
 }

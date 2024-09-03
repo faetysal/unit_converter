@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   responsive_grid_list: ^1.4.0
   dropdown_button2: ^2.3.9
+  hugeicons: ^0.0.7
 
 dev_dependencies:
   flutter_test:
