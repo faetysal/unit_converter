@@ -28,7 +28,7 @@ class Home extends StatelessWidget {
       Quantity(id: 6, title: 'Data', icon: HugeIcons.strokeRoundedDatabase, type: QuantityType.data),
       Quantity(id: 7, title: 'Speed', icon: HugeIcons.strokeRoundedDashboardSpeed02, type: QuantityType.speed),
       Quantity(id: 8, title: 'Time', icon: HugeIcons.strokeRoundedClock02, type: QuantityType.time),
-      Quantity(id: 9, title: 'Tip', icon: HugeIcons.strokeRoundedTips, type: QuantityType.tip)
+      // Quantity(id: 9, title: 'Tip', icon: HugeIcons.strokeRoundedTips, type: QuantityType.tip)
     ];
 
     return Scaffold(
@@ -51,6 +51,7 @@ class Home extends StatelessWidget {
               value: controller.quantityType.value,
               onChanged: (v) {
                 controller.quantityType.value = v;
+                controller.init();
               },
               children: quantities,
             )
@@ -90,7 +91,21 @@ class Home extends StatelessWidget {
                                     items: controller.quantityType.value.units.map((u) {
                                       return DropdownMenuItem(
                                         value: u,
-                                        child: Text('${u.title} (${u.symbol})')
+                                        child: RichText(
+                                          text: TextSpan(
+                                            style: TextStyle(
+                                              color: Colors.black
+                                            ),
+                                            children: [
+                                              TextSpan(text: u.title),
+                                              TextSpan(text: ' (${u.symbol}'),
+                                              TextSpan(text: u.sup ?? '', style: const TextStyle(
+                                                fontFeatures: [FontFeature.superscripts()]
+                                              )),
+                                              TextSpan(text: ')'),
+                                            ]
+                                          )
+                                        )
                                       );
                                     }).toList(),
                                     onChanged: (v) {
@@ -247,6 +262,10 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    init();
+  }
+
+  void init() {
     fromUnit = quantityType.value.units.first.obs;
     toUnit = quantityType.value.units.last.obs;
   }
