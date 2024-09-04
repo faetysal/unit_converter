@@ -66,8 +66,9 @@ class Home extends StatelessWidget {
                     children: [
                       Container(
                         height: constraints.maxHeight / 2,
-                        padding: const EdgeInsets.only(top: 8),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(
+                          //color: Colors.red,
                           border: Border(
                             top: BorderSide(color: Colors.grey[300]!),
                             bottom: BorderSide(color: Colors.grey[300]!)
@@ -121,27 +122,35 @@ class Home extends StatelessWidget {
                                 ),
                               ]
                             ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    // height: 60,
-                                    child: _buildInputField()
+                            Expanded(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      // height: 60,
+                                      child: _buildInputField()
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 8),
-                                Text('KB', style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600
-                                ))
-                              ],
-                            ),
+                                  const SizedBox(width: 8),
+                                  Text('KB', style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600
+                                  ))
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       )),
                       Container(
                         height: constraints.maxHeight / 2,
                         padding: const EdgeInsets.only(top: 8),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey[300]!)
+                          )
+                        ),
                         child: Obx(() => Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -217,6 +226,8 @@ class Home extends StatelessWidget {
               maxItemsPerRow: 4,
               horizontalGridSpacing: 8,
               verticalGridSpacing: 8,
+              verticalGridMargin: 16,
+              horizontalGridMargin: 16,
               children: [
                 _buildInputBtn(text: '7'),
                 _buildInputBtn(text: '8'),
@@ -281,6 +292,8 @@ class Home extends StatelessWidget {
       textAlign: TextAlign.end,
       keyboardType: TextInputType.none,
       decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.zero,
         focusedBorder: InputBorder.none,
         border: InputBorder.none
       ),
