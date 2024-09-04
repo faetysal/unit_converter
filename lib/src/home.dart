@@ -56,6 +56,7 @@ class Home extends StatelessWidget {
               children: quantities,
             )
           ),
+
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -76,8 +77,6 @@ class Home extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
-                              /*alignment: Alignment.centerLeft,
-                              color: Colors.yellow,*/
                               children: [
                                 DropdownButtonHideUnderline(
                                   child: DropdownButton2<QuantityUnit>(
@@ -122,16 +121,20 @@ class Home extends StatelessWidget {
                                 ),
                               ]
                             ),
-                            Container(
-                              // height: 60,
-                              child: TextField(
-                                textAlign: TextAlign.end,
-                                keyboardType: TextInputType.none,
-                                decoration: InputDecoration(
-                                  focusedBorder: InputBorder.none,
-                                  border: InputBorder.none
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    // height: 60,
+                                    child: _buildInputField()
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(width: 8),
+                                Text('KB', style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600
+                                ))
+                              ],
                             ),
                           ],
                         ),
@@ -173,17 +176,20 @@ class Home extends StatelessWidget {
                                 ),
                               ]
                             ),
-                            Container(
-                              // height: 60,
-                              child: TextField(
-                                textAlign: TextAlign.end,
-                                keyboardType: TextInputType.none,
-                                decoration: InputDecoration(
-                                  focusedBorder: InputBorder.none,
-                                  border: InputBorder.none
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    child: _buildInputField(),
+                                  )
                                 ),
-                              ),
-                            ),
+                                const SizedBox(width: 8),
+                                Text('MB', style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600
+                                ))
+                              ],
+                            )
                           ],
                         )),
                       )
@@ -193,6 +199,7 @@ class Home extends StatelessWidget {
               )
             )
           ),
+
           Container(
             constraints: BoxConstraints(
               minHeight: MediaQuery.of(context).size.height * .1,
@@ -262,6 +269,21 @@ class Home extends StatelessWidget {
         fontSize: 18,
         color: color ?? Colors.grey[700]
       ))),
+    );
+  }
+
+  Widget _buildInputField() {
+    return TextField(
+      style: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w600
+      ),
+      textAlign: TextAlign.end,
+      keyboardType: TextInputType.none,
+      decoration: InputDecoration(
+        focusedBorder: InputBorder.none,
+        border: InputBorder.none
+      ),
     );
   }
 }
