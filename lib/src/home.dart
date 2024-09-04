@@ -15,7 +15,12 @@ class Home extends StatelessWidget {
     HomeController controller = Get.put(HomeController());
 
     List<Quantity> quantities = [
-      Quantity(id: 1, title: 'Length', icon: HugeIcons.strokeRoundedRuler, type: QuantityType.length),
+      Quantity(
+        id: 1,
+        title: 'Length',
+        icon: HugeIcons.strokeRoundedRuler,
+        type: QuantityType.length
+      ),
       Quantity(id: 2, title: 'Area', icon: HugeIcons.strokeRoundedBoundingBox, type: QuantityType.area),
       Quantity(id: 3, title: 'Temperature', icon: HugeIcons.strokeRoundedTemperature, type: QuantityType.temperature),
       Quantity(id: 4, title: 'Volume', icon: HugeIcons.strokeRoundedDroplet, type: QuantityType.volume),
@@ -34,7 +39,7 @@ class Home extends StatelessWidget {
         title: const Text('Converter', style: TextStyle(color: Colors.black),),
         centerTitle: false,
       ),
-      body: Column(
+      body: Obx(() => Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
@@ -42,13 +47,13 @@ class Home extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             margin: const EdgeInsets.only(top: 5, bottom: 10),
             // color: Colors.orange,
-            child: Obx(() => SelectorList(
+            child: SelectorList(
               value: controller.quantityType.value,
               onChanged: (v) {
                 controller.quantityType.value = v;
               },
               children: quantities,
-            ))
+            )
           ),
           Expanded(
             child: Container(
@@ -66,34 +71,41 @@ class Home extends StatelessWidget {
                             bottom: BorderSide(color: Colors.grey[300]!)
                           )
                         ),
-                        child: Column(
+                        child: Obx(() => Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              // color: Colors.yellow,
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton2(
-                                  customButton: Row(
-                                    children: [
-                                      Text('Input'),
-                                      Icon(Icons.arrow_drop_down)
-                                    ],
-                                  ),
-                                  items: [
-                                    DropdownMenuItem(child: Text('Option 1'), value: '1'),
-                                    DropdownMenuItem(child: Text('Option 2'), value: '2',),
-                                  ],
-                                  onChanged: (v) {},
-                                  isDense: true,
-                                  dropdownStyleData: DropdownStyleData(
-                                    width: MediaQuery.of(context).size.width * .7,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8)
-                                    )
-                                  ),
-                                )
-                              ),
+                            Row(
+                              /*alignment: Alignment.centerLeft,
+                              color: Colors.yellow,*/
+                              children: [
+                                DropdownButtonHideUnderline(
+                                  child: DropdownButton2<QuantityUnit>(
+                                    value: controller.fromUnit.value,
+                                    customButton: Row(
+                                      children: [
+                                        Text(controller.fromUnit.value.title),
+                                        Icon(Icons.arrow_drop_down)
+                                      ],
+                                    ),
+                                    items: controller.quantityType.value.units.map((u) {
+                                      return DropdownMenuItem(
+                                        value: u,
+                                        child: Text('${u.title} (${u.symbol})')
+                                      );
+                                    }).toList(),
+                                    onChanged: (v) {
+                                      controller.fromUnit.value = v!;
+                                    },
+                                    isDense: true,
+                                    dropdownStyleData: DropdownStyleData(
+                                      width: MediaQuery.of(context).size.width * .7,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8)
+                                      )
+                                    ),
+                                  )
+                                ),
+                              ]
                             ),
                             Container(
                               height: 60,
@@ -108,38 +120,43 @@ class Home extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
+                      )),
                       Container(
                         height: constraints.maxHeight / 2,
                         padding: const EdgeInsets.only(top: 8),
-                        child: Column(
+                        child: Obx(() => Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              // color: Colors.yellow,
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton2(
-                                  customButton: Row(
-                                    children: [
-                                      Text('Output'),
-                                      Icon(Icons.arrow_drop_down)
-                                    ],
-                                  ),
-                                  items: [
-                                    DropdownMenuItem(child: Text('Option 1'), value: '1'),
-                                    DropdownMenuItem(child: Text('Option 2'), value: '2',),
-                                  ],
-                                  onChanged: (v) {},
-                                  isDense: true,
-                                  dropdownStyleData: DropdownStyleData(
-                                    width: MediaQuery.of(context).size.width * .7,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8)
-                                    )
-                                  ),
-                                )
-                              ),
+                            Row(
+                              children: [
+                                DropdownButtonHideUnderline(
+                                  child: DropdownButton2<QuantityUnit>(
+                                    value: controller.toUnit.value,
+                                    customButton: Row(
+                                      children: [
+                                        Text(controller.toUnit.value.title),
+                                        Icon(Icons.arrow_drop_down)
+                                      ],
+                                    ),
+                                    items: controller.quantityType.value.units.map((u) {
+                                      return DropdownMenuItem(
+                                        value: u,
+                                        child: Text('${u.title} (${u.symbol})'), 
+                                      );
+                                    }).toList(),
+                                    onChanged: (v) {
+                                      controller.toUnit.value = v!;
+                                    },
+                                    isDense: true,
+                                    dropdownStyleData: DropdownStyleData(
+                                      width: MediaQuery.of(context).size.width * .7,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8)
+                                      )
+                                    ),
+                                  )
+                                ),
+                              ]
                             ),
                             Container(
                               height: 60,
@@ -153,7 +170,7 @@ class Home extends StatelessWidget {
                               ),
                             ),
                           ],
-                        ),
+                        )),
                       )
                     ],
                   );
@@ -203,7 +220,7 @@ class Home extends StatelessWidget {
             ),
           )
         ],
-      )
+      ))
     );
   }
 
@@ -224,4 +241,13 @@ class Home extends StatelessWidget {
 
 class HomeController extends GetxController {
   Rx<QuantityType> quantityType = QuantityType.length.obs;
+  late Rx<QuantityUnit> fromUnit;
+  late Rx<QuantityUnit> toUnit;
+
+  @override
+  void onInit() {
+    super.onInit();
+    fromUnit = quantityType.value.units.first.obs;
+    toUnit = quantityType.value.units.last.obs;
+  }
 }

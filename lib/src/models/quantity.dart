@@ -17,14 +17,31 @@ class Quantity {
 }
 
 enum QuantityType {
-  length,
-  area,
-  temperature,
-  volume,
-  mass,
-  data,
-  speed,
-  time,
-  tip,
-  none
+  length([
+    QuantityUnit(title: 'Milimetres', symbol: 'mm'),
+    QuantityUnit(title: 'Centimetres', symbol: 'cm'),
+    QuantityUnit(title: 'Metres', symbol: 'm')
+  ]),
+  area([]),
+  temperature([]),
+  volume([]),
+  mass([]),
+  data([]),
+  speed([]),
+  time([]),
+  tip([]),
+  none([]);
+
+  const QuantityType(this.units);
+  final List<QuantityUnit> units;
+}
+
+class QuantityUnit {
+  final String title;
+  final String symbol;
+
+  const QuantityUnit({
+    this.title = '',
+    this.symbol = ''
+  });
 }
