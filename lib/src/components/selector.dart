@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:unit_converter/src/constants.dart';
 
 import '../models/quantity.dart';
 import 'gradient_mask.dart';
@@ -58,7 +59,7 @@ class Selector extends StatelessWidget {
           color: Colors.white,
           border: parent!.value == value
             ? GradientBoxBorder(
-                gradient: LinearGradient(colors: [Colors.pink, Colors.purple])
+                gradient: LinearGradient(colors: appGradient)
               )
             : null,
           borderRadius: BorderRadius.circular(8)
@@ -78,7 +79,7 @@ class Selector extends StatelessWidget {
               child: parent.value == value
                 ? GradientText(
                     label, 
-                    colors: [Colors.pink, Colors.purple],
+                    colors: appGradient,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold

@@ -123,7 +123,7 @@ class Home extends StatelessWidget {
                               ]
                             ),
                             Container(
-                              height: 60,
+                              // height: 60,
                               child: TextField(
                                 textAlign: TextAlign.end,
                                 keyboardType: TextInputType.none,
@@ -174,7 +174,7 @@ class Home extends StatelessWidget {
                               ]
                             ),
                             Container(
-                              height: 60,
+                              // height: 60,
                               child: TextField(
                                 textAlign: TextAlign.end,
                                 keyboardType: TextInputType.none,
@@ -208,28 +208,36 @@ class Home extends StatelessWidget {
               minItemWidth: 30,
               minItemsPerRow: 4,
               maxItemsPerRow: 4,
-              horizontalGridSpacing: 0,
-              verticalGridSpacing: 0,
+              horizontalGridSpacing: 8,
+              verticalGridSpacing: 8,
               children: [
                 _buildInputBtn(text: '7'),
                 _buildInputBtn(text: '8'),
                 _buildInputBtn(text: '9'),
-                _buildInputBtn(text: '⌫'),
+                _buildInputBtn(text: '⌫', color: Colors.indigo[900]),
 
                 _buildInputBtn(text: '4'),
                 _buildInputBtn(text: '5'),
                 _buildInputBtn(text: '6'),
-                _buildInputBtn(text: 'C'),
+                _buildInputBtn(text: 'C', color: Colors.red),
 
                 _buildInputBtn(text: '1'),
                 _buildInputBtn(text: '2'),
                 _buildInputBtn(text: '3'),
-                _buildInputBtn(child: Icon(HugeIcons.strokeRoundedArrowUp01)),
+                _buildInputBtn(child: Icon(
+                  HugeIcons.strokeRoundedArrowUp02, 
+                  color: Colors.teal[900],
+                  size: 30,
+                )),
 
                 _buildInputBtn(text: '+/-'),
                 _buildInputBtn(text: '0'),
                 _buildInputBtn(text: '.'),
-                _buildInputBtn(child: Icon(HugeIcons.strokeRoundedArrowDown01)),
+                _buildInputBtn(child: Icon(
+                  HugeIcons.strokeRoundedArrowDown02,
+                  color: Colors.teal[900],
+                  size: 30,
+                )),
 
               ],
             ),
@@ -239,16 +247,20 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _buildInputBtn({String? text, Widget? child}) {
+  Widget _buildInputBtn({String? text, Color? color,  Widget? child}) {
     return Container(
       width: 80,
       height: 80,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey[300]!)
+        //border: Border.all(color: Colors.grey[300]!),
+        // shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.grey[200]
       ),
       child: child ?? Center(child: Text(text ?? '', style: TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 18
+        fontSize: 18,
+        color: color ?? Colors.grey[700]
       ))),
     );
   }

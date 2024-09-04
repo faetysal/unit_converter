@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unit_converter/src/constants.dart';
 
 class RadiantGradientMask extends StatelessWidget {
   RadiantGradientMask({required this.child});
@@ -10,7 +11,7 @@ class RadiantGradientMask extends StatelessWidget {
       shaderCallback: (bounds) => RadialGradient(
         center: Alignment.center,
         radius: 0.5,
-        colors: [Colors.pink, Colors.purple],
+        colors: appGradient,
         tileMode: TileMode.mirror,
       ).createShader(bounds),
       child: child,
