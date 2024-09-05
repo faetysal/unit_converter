@@ -33,7 +33,7 @@ class Home extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey[100],
         elevation: 0,
         shadowColor: Colors.transparent,
         title: const Text('Converter', style: TextStyle(color: Colors.black),),
@@ -129,7 +129,7 @@ class Home extends StatelessWidget {
                                   Expanded(
                                     child: Container(
                                       // height: 60,
-                                      child: _buildInputField()
+                                      child: _buildInputField(controller: controller.fromCtrl, focusNode: controller.fromFocus)
                                     ),
                                   ),
                                   const SizedBox(width: 8),
@@ -192,7 +192,7 @@ class Home extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      child: _buildInputField(),
+                                      child: _buildInputField(controller: controller.toCtrl, focusNode: controller.toFocus),
                                     )
                                   ),
                                   const SizedBox(width: 8),
@@ -236,7 +236,7 @@ class Home extends StatelessWidget {
                 _buildInputBtn(text: '7'),
                 _buildInputBtn(text: '8'),
                 _buildInputBtn(text: '9'),
-                _buildInputBtn(text: '⌫', color: Colors.indigo[900]),
+                _buildInputBtn(text: '⌫', color: Colors.indigo[900], onPressed: () => _backspace()),
 
                 _buildInputBtn(text: '4'),
                 _buildInputBtn(text: '5'),
@@ -246,20 +246,26 @@ class Home extends StatelessWidget {
                 _buildInputBtn(text: '1'),
                 _buildInputBtn(text: '2'),
                 _buildInputBtn(text: '3'),
-                _buildInputBtn(child: Icon(
-                  HugeIcons.strokeRoundedArrowUp02, 
-                  color: Colors.teal[900],
-                  size: 30,
-                )),
+                _buildInputBtn(
+                  child: Icon(
+                    HugeIcons.strokeRoundedArrowUp02, 
+                    color: Colors.teal[900],
+                    size: 30,
+                  ),
+                  onPressed: () => _moveFocusUp()
+                ),
 
                 _buildInputBtn(text: '+/-'),
                 _buildInputBtn(text: '0'),
                 _buildInputBtn(text: '.'),
-                _buildInputBtn(child: Icon(
-                  HugeIcons.strokeRoundedArrowDown02,
-                  color: Colors.teal[900],
-                  size: 30,
-                )),
+                _buildInputBtn(
+                  child: Icon(
+                    HugeIcons.strokeRoundedArrowDown02,
+                    color: Colors.teal[900],
+                    size: 30,
+                  ),
+                  onPressed: () => _moveFocusDown()
+                ),
 
               ],
             ),
@@ -269,33 +275,45 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _buildInputBtn({String? text, Color? color,  Widget? child}) {
-    return Container(
-      width: 80,
-      height: 80,
-      decoration: BoxDecoration(
-        //border: Border.all(color: Colors.grey[300]!),
-        // shape: BoxShape.rectangle,
+  Widget _buildInputBtn({String? text, Color? color,  Widget? child, void Function()? onPressed}) {
+    return Material(
+      color: Colors.grey[200],
+      borderRadius: BorderRadius.circular(8),
+      child: InkWell(
+        onTap: onPressed ?? () => _input(text!),
         borderRadius: BorderRadius.circular(8),
-        color: Colors.grey[200]
-      ),
-      child: child ?? Center(child: Text(text ?? '', style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 18,
-        color: color ?? Colors.grey[700]
-      ))),
+        // splashColor: Colors.teal[50],
+        child: Container(
+          width: 80,
+          height: 80,
+          decoration: BoxDecoration(
+            //border: Border.all(color: Colors.grey[300]!),
+            // shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.transparent
+            // color: Colors.grey[200]
+          ),
+          child: child ?? Center(child: Text(text ?? '', style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: color ?? Colors.grey[700]
+          ))),
+        )
+      )
     );
   }
 
-  Widget _buildInputField() {
+  Widget _buildInputField({required TextEditingController controller, required FocusNode focusNode}) {
     return TextField(
-      style: TextStyle(
+      controller: controller,
+      focusNode: focusNode,
+      style: const TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w600
       ),
       textAlign: TextAlign.end,
       keyboardType: TextInputType.none,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.zero,
         focusedBorder: InputBorder.none,
@@ -303,21 +321,70 @@ class Home extends StatelessWidget {
       ),
     );
   }
+
+  void _input(String char) {
+    HomeController controller = Get.find();
+    final inputCtrl = controller.activeField.$1;
+    final value = inputCtrl.text + char;
+    inputCtrl.text = value;
+  }
+
+  void _backspace() {
+    HomeController controller = Get.find();
+    final inputCtrl = controller.activeField.$1;
+    final value = inputCtrl.text; 
+    if (value.isNotEmpty) {
+      inputCtrl.text = value.substring(0, value.length - 1);
+    }
+  }
+
+  void _moveFocusUp() {
+    HomeController controller = Get.find();
+    controller.fromFocus.requestFocus();
+  }
+
+  void _moveFocusDown() {
+    HomeController controller = Get.find();
+    controller.toFocus.requestFocus();
+  }
 }
 
 class HomeController extends GetxController {
   Rx<QuantityType> quantityType = QuantityType.length.obs;
+
   late Rx<QuantityUnit> fromUnit;
+  late TextEditingController fromCtrl;
+  FocusNode fromFocus = FocusNode();
+
   late Rx<QuantityUnit> toUnit;
+  late TextEditingController toCtrl;
+  FocusNode toFocus = FocusNode();
+
+  late (TextEditingController, FocusNode) activeField;
 
   @override
   void onInit() {
     super.onInit();
+    fromCtrl = TextEditingController();
+    fromCtrl.addListener(() {
+      print('Cursor pos: ${fromCtrl.selection.base.offset}');
+    });
+    fromFocus.requestFocus();
+
+    toCtrl = TextEditingController();
+    activeField = (fromCtrl, fromFocus);
     init();
   }
 
   void init() {
     fromUnit = quantityType.value.units.first.obs;
     toUnit = quantityType.value.units.last.obs;
+  }
+
+  @override
+  void onClose() {
+    fromCtrl.dispose();
+    toCtrl.dispose();
+    super.onClose();
   }
 }
