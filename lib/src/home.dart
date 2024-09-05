@@ -133,7 +133,7 @@ class Home extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 8),
-                                  Text('KB', style: TextStyle(
+                                  Text(controller.fromUnit.value.symbol, style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600
                                   ))
@@ -145,8 +145,9 @@ class Home extends StatelessWidget {
                       )),
                       Container(
                         height: constraints.maxHeight / 2,
-                        padding: const EdgeInsets.only(top: 8),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(
+                          // color: Colors.red,
                           border: Border(
                             bottom: BorderSide(color: Colors.grey[300]!)
                           )
@@ -185,19 +186,22 @@ class Home extends StatelessWidget {
                                 ),
                               ]
                             ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    child: _buildInputField(),
-                                  )
-                                ),
-                                const SizedBox(width: 8),
-                                Text('MB', style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600
-                                ))
-                              ],
+                            Expanded(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      child: _buildInputField(),
+                                    )
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(controller.toUnit.value.symbol, style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600
+                                  ))
+                                ],
+                              )
                             )
                           ],
                         )),
