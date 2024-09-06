@@ -236,12 +236,12 @@ class Home extends StatelessWidget {
                 _buildInputBtn(text: '7'),
                 _buildInputBtn(text: '8'),
                 _buildInputBtn(text: '9'),
-                _buildInputBtn(text: '⌫', color: Colors.indigo[900], onPressed: () => _backspace()),
+                _buildInputBtn(text: '⌫', color: Colors.indigo[900], onPressed: () => controller.backspace()),
 
                 _buildInputBtn(text: '4'),
                 _buildInputBtn(text: '5'),
                 _buildInputBtn(text: '6'),
-                _buildInputBtn(text: 'C', color: Colors.red, onPressed: () => _clear()),
+                _buildInputBtn(text: 'C', color: Colors.red, onPressed: () => controller.clear()),
 
                 _buildInputBtn(text: '1'),
                 _buildInputBtn(text: '2'),
@@ -252,7 +252,7 @@ class Home extends StatelessWidget {
                     color: Colors.teal[900],
                     size: 30,
                   ),
-                  onPressed: () => _moveFocusUp()
+                  onPressed: () => controller.moveFocusUp()
                 ),
 
                 _buildInputBtn(text: '+/-'),
@@ -264,7 +264,7 @@ class Home extends StatelessWidget {
                     color: Colors.teal[900],
                     size: 30,
                   ),
-                  onPressed: () => _moveFocusDown()
+                  onPressed: () => controller.moveFocusDown()
                 ),
 
               ],
@@ -276,11 +276,13 @@ class Home extends StatelessWidget {
   }
 
   Widget _buildInputBtn({String? text, Color? color,  Widget? child, void Function()? onPressed}) {
+    HomeController controller = Get.find();
+
     return Material(
       color: Colors.grey[200],
       borderRadius: BorderRadius.circular(8),
       child: InkWell(
-        onTap: onPressed ?? () => _input(text!),
+        onTap: onPressed ?? () => controller.input(text!),
         borderRadius: BorderRadius.circular(8),
         // splashColor: Colors.teal[50],
         child: Container(
@@ -320,48 +322,6 @@ class Home extends StatelessWidget {
         border: InputBorder.none
       ),
     );
-  }
-
-  void _input(String char) {
-    HomeController controller = Get.find();
-    final inputCtrl = controller.activeField.$1;
-    final position = inputCtrl.selection.base.offset;
-    var value = inputCtrl.text;
-
-    var suffix = value.substring(position, value.length);
-    value = value.substring(0, position) + char + suffix;
-
-    inputCtrl.text = value;
-    inputCtrl.selection = TextSelection.fromPosition(TextPosition(offset: position + 1));
-  }
-
-  void _backspace() {
-    HomeController controller = Get.find();
-    final inputCtrl = controller.activeField.$1;
-    final position = inputCtrl.selection.base.offset;
-    final value = inputCtrl.text; 
-
-    if (value.isNotEmpty && position != 0) {
-      final suffix = value.substring(position, value.length);
-      inputCtrl.text = value.substring(0, position - 1) + suffix;
-      inputCtrl.selection = TextSelection.fromPosition(TextPosition(offset: position - 1));
-    }
-  }
-
-  void _clear() {
-    HomeController controller = Get.find();
-    controller.fromCtrl.text = '';
-    controller.toCtrl.text = '';
-  }
-
-  void _moveFocusUp() {
-    HomeController controller = Get.find();
-    controller.fromFocus.requestFocus();
-  }
-
-  void _moveFocusDown() {
-    HomeController controller = Get.find();
-    controller.toFocus.requestFocus();
   }
 }
 
@@ -411,5 +371,42 @@ class HomeController extends GetxController {
     toCtrl.dispose();
     toFocus.dispose();
     super.onClose();
+  }
+
+  void input(String char) {
+    final inputCtrl = activeField.$1;
+    final position = inputCtrl.selection.base.offset;
+    var value = inputCtrl.text;
+
+    var suffix = value.substring(position, value.length);
+    value = value.substring(0, position) + char + suffix;
+
+    inputCtrl.text = value;
+    inputCtrl.selection = TextSelection.fromPosition(TextPosition(offset: position + 1));
+  }
+
+  void backspace() {
+    final inputCtrl = activeField.$1;
+    final position = inputCtrl.selection.base.offset;
+    final value = inputCtrl.text; 
+
+    if (value.isNotEmpty && position != 0) {
+      final suffix = value.substring(position, value.length);
+      inputCtrl.text = value.substring(0, position - 1) + suffix;
+      inputCtrl.selection = TextSelection.fromPosition(TextPosition(offset: position - 1));
+    }
+  }
+
+  void clear() {
+    fromCtrl.text = '';
+    toCtrl.text = '';
+  }
+
+  void moveFocusUp() {
+    fromFocus.requestFocus();
+  }
+
+  void moveFocusDown() {
+    toFocus.requestFocus();
   }
 }
