@@ -44,8 +44,8 @@ enum QuantityType {
     QuantityUnit(title: 'Kelvin', symbol: 'K'),
   ]),
   volume([
-    QuantityUnit(title: 'UK gallons', symbol: 'gal'),
-    QuantityUnit(title: 'US gallons', symbol: 'gal'),
+    QuantityUnit(title: 'UK gallons', symbol: 'gal', uSym: 'uk_gal'),
+    QuantityUnit(title: 'US gallons', symbol: 'gal', uSym: 'us_gal'),
     QuantityUnit(title: 'Litres', symbol: 'l'),
     QuantityUnit(title: 'Millilitres', symbol: 'ml'),
     QuantityUnit(title: 'Cubic centimetres (cc)', symbol: 'cm', sup: '3'),
@@ -55,8 +55,8 @@ enum QuantityType {
   ]),
   mass([
     QuantityUnit(title: 'Tons', symbol: 't'),
-    QuantityUnit(title: 'UK tons', symbol: 't'),
-    QuantityUnit(title: 'US tons', symbol: 't'),
+    QuantityUnit(title: 'UK tons', symbol: 't', uSym: 'uk_t'),
+    QuantityUnit(title: 'US tons', symbol: 't', uSym: 'us_t'),
     QuantityUnit(title: 'Pounds', symbol: 'lb'),
     QuantityUnit(title: 'Ounces', symbol: 'oz'),
     QuantityUnit(title: 'Kilogrammes', symbol: 'kg'),
@@ -105,11 +105,13 @@ enum QuantityType {
 class QuantityUnit {
   final String title;
   final String symbol;
+  final String? uSym;
   final String? sup;
 
   const QuantityUnit({
     this.title = '',
     this.symbol = '',
+    this.uSym,
     this.sup
   });
 
@@ -121,3 +123,9 @@ class QuantityUnit {
     );
   }
 }
+
+/*class FunctionMap {
+  Map<String, Function()> entries = {
+    'celcius_to_fahrenheit': 
+  };
+}*/

@@ -129,7 +129,7 @@ class Home extends StatelessWidget {
                                   Expanded(
                                     child: Container(
                                       // height: 60,
-                                      child: _buildInputField(controller: controller.fromCtrl, focusNode: controller.fromFocus)
+                                      child: _buildInputField(inputController: controller.fromCtrl, focusNode: controller.fromFocus)
                                     ),
                                   ),
                                   const SizedBox(width: 8),
@@ -192,7 +192,7 @@ class Home extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      child: _buildInputField(controller: controller.toCtrl, focusNode: controller.toFocus),
+                                      child: _buildInputField(inputController: controller.toCtrl, focusNode: controller.toFocus),
                                     )
                                   ),
                                   const SizedBox(width: 8),
@@ -305,9 +305,9 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _buildInputField({required TextEditingController controller, required FocusNode focusNode}) {
+  Widget _buildInputField({required TextEditingController inputController, required FocusNode focusNode}) {
     return TextField(
-      controller: controller,
+      controller: inputController,
       focusNode: focusNode,
       style: const TextStyle(
         fontSize: 22,
@@ -338,21 +338,32 @@ class HomeController extends GetxController {
   FocusNode toFocus = FocusNode();
 
   late (TextEditingController, FocusNode) activeField;
+  int convOrder = 1; // 1: top to bottom, -1: reverse
 
   @override
   void onInit() {
     super.onInit();
     fromCtrl = TextEditingController();
+    fromCtrl.addListener(() {
+      handleConversion(fromCtrl.text);
+    });
+
     fromFocus.addListener(() {
       if (fromFocus.hasFocus) {
+        convOrder = 1;
         activeField = (fromCtrl, fromFocus);
       }
     });
     fromFocus.requestFocus();
 
     toCtrl = TextEditingController();
+    toCtrl.addListener(() {
+      handleConversion(toCtrl.text);
+    });
+
     toFocus.addListener(() {
       if (toFocus.hasFocus) {
+        convOrder = -1;
         activeField = (toCtrl, toFocus);
       }
     });
@@ -361,7 +372,8 @@ class HomeController extends GetxController {
 
   void init() {
     fromUnit = quantityType.value.units.first.obs;
-    toUnit = quantityType.value.units.last.obs;
+    toUnit = quantityType.value.units[1].obs;
+    clear();
   }
 
   @override
@@ -409,4 +421,26 @@ class HomeController extends GetxController {
   void moveFocusDown() {
     toFocus.requestFocus();
   }
+
+  void handleConversion(String value) {
+    HomeController controller = Get.find();
+    String from = fromUnit.value.uSym ?? fromUnit.value.symbol;
+    String to = toUnit.value.uSym ?? toUnit.value.symbol;
+    if (convOrder == -1) {
+      final temp = from;
+      from = to;
+      to = temp;
+    }
+
+    print('Converting from: $from to $to');
+  }
+
+  void Function() c2f = () {
+    print('Celcius to Fahrenheit');
+  };
+
+  void fahrenheitToCelcius() {
+    print('Fahrenheit to Celcius');
+  }
+
 }
