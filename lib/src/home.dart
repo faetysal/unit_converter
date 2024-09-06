@@ -241,7 +241,7 @@ class Home extends StatelessWidget {
                 _buildInputBtn(text: '4'),
                 _buildInputBtn(text: '5'),
                 _buildInputBtn(text: '6'),
-                _buildInputBtn(text: 'C', color: Colors.red),
+                _buildInputBtn(text: 'C', color: Colors.red, onPressed: () => _clear()),
 
                 _buildInputBtn(text: '1'),
                 _buildInputBtn(text: '2'),
@@ -346,6 +346,12 @@ class Home extends StatelessWidget {
       inputCtrl.text = value.substring(0, position - 1) + suffix;
       inputCtrl.selection = TextSelection.fromPosition(TextPosition(offset: position - 1));
     }
+  }
+
+  void _clear() {
+    HomeController controller = Get.find();
+    controller.fromCtrl.text = '';
+    controller.toCtrl.text = '';
   }
 
   void _moveFocusUp() {
