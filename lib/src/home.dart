@@ -377,14 +377,19 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     fromCtrl = TextEditingController();
-    // fromSelection = fromCtrl.selection;
-    /*fromCtrl.addListener(() {
-      fromSelection = fromCtrl.selection;
-    });*/
+    fromFocus.addListener(() {
+      if (fromFocus.hasFocus) {
+        activeField = (fromCtrl, fromFocus);
+      }
+    });
     fromFocus.requestFocus();
 
     toCtrl = TextEditingController();
-    activeField = (fromCtrl, fromFocus);
+    toFocus.addListener(() {
+      if (toFocus.hasFocus) {
+        activeField = (toCtrl, toFocus);
+      }
+    });
     init();
   }
 
@@ -396,7 +401,9 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     fromCtrl.dispose();
+    fromFocus.dispose();
     toCtrl.dispose();
+    toFocus.dispose();
     super.onClose();
   }
 }
