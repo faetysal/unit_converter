@@ -325,8 +325,14 @@ class Home extends StatelessWidget {
   void _input(String char) {
     HomeController controller = Get.find();
     final inputCtrl = controller.activeField.$1;
-    final value = inputCtrl.text + char;
+    final position = inputCtrl.selection.base.offset;
+    var value = inputCtrl.text;
+
+    var suffix = value.substring(position, value.length);
+    value = value.substring(0, position) + char + suffix;
+
     inputCtrl.text = value;
+    inputCtrl.selection = TextSelection.fromPosition(TextPosition(offset: position + 1));
   }
 
   void _backspace() {
@@ -354,6 +360,7 @@ class HomeController extends GetxController {
 
   late Rx<QuantityUnit> fromUnit;
   late TextEditingController fromCtrl;
+  // late TextSelection fromSelection;
   FocusNode fromFocus = FocusNode();
 
   late Rx<QuantityUnit> toUnit;
@@ -366,9 +373,10 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     fromCtrl = TextEditingController();
-    fromCtrl.addListener(() {
-      print('Cursor pos: ${fromCtrl.selection.base.offset}');
-    });
+    // fromSelection = fromCtrl.selection;
+    /*fromCtrl.addListener(() {
+      fromSelection = fromCtrl.selection;
+    });*/
     fromFocus.requestFocus();
 
     toCtrl = TextEditingController();
