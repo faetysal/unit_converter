@@ -338,9 +338,13 @@ class Home extends StatelessWidget {
   void _backspace() {
     HomeController controller = Get.find();
     final inputCtrl = controller.activeField.$1;
+    final position = inputCtrl.selection.base.offset;
     final value = inputCtrl.text; 
-    if (value.isNotEmpty) {
-      inputCtrl.text = value.substring(0, value.length - 1);
+
+    if (value.isNotEmpty && position != 0) {
+      final suffix = value.substring(position, value.length);
+      inputCtrl.text = value.substring(0, position - 1) + suffix;
+      inputCtrl.selection = TextSelection.fromPosition(TextPosition(offset: position - 1));
     }
   }
 
