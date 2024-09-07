@@ -428,6 +428,7 @@ class HomeController extends GetxController {
   void clear() {
     fromCtrl.text = '';
     toCtrl.text = '';
+    prevInputVal = '';
   }
 
   void moveFocusUp() {
