@@ -330,7 +330,7 @@ class HomeController extends GetxController {
 
   late Rx<QuantityUnit> fromUnit;
   late TextEditingController fromCtrl;
-  // late TextSelection fromSelection;
+  String prevInputVal = '';
   FocusNode fromFocus = FocusNode();
 
   late Rx<QuantityUnit> toUnit;
@@ -345,7 +345,15 @@ class HomeController extends GetxController {
     super.onInit();
     fromCtrl = TextEditingController();
     fromCtrl.addListener(() {
-      handleConversion(fromCtrl.text);
+      print('Prev: $prevInputVal');
+      print('Fromtxt: ${fromCtrl.text}');
+      if (fromFocus.hasFocus && prevInputVal != fromCtrl.text) {
+        if (fromCtrl.text.isNotEmpty) {
+          handleConversion(fromCtrl.text);
+        } else {
+          toCtrl.text = '';
+        }
+      }
     });
 
     fromFocus.addListener(() {
@@ -358,7 +366,13 @@ class HomeController extends GetxController {
 
     toCtrl = TextEditingController();
     toCtrl.addListener(() {
-      handleConversion(toCtrl.text);
+      if (toFocus.hasFocus && prevInputVal != toCtrl.text) {
+        if (toCtrl.text.isNotEmpty) {
+          handleConversion(toCtrl.text);
+        } else {
+          fromCtrl.text = '';
+        }
+      }
     });
 
     toFocus.addListener(() {
@@ -394,6 +408,7 @@ class HomeController extends GetxController {
     value = value.substring(0, position) + char + suffix;
 
     inputCtrl.text = value;
+    prevInputVal = value;
     inputCtrl.selection = TextSelection.fromPosition(TextPosition(offset: position + 1));
   }
 
@@ -405,6 +420,7 @@ class HomeController extends GetxController {
     if (value.isNotEmpty && position != 0) {
       final suffix = value.substring(position, value.length);
       inputCtrl.text = value.substring(0, position - 1) + suffix;
+      prevInputVal = inputCtrl.text;
       inputCtrl.selection = TextSelection.fromPosition(TextPosition(offset: position - 1));
     }
   }
@@ -415,32 +431,45 @@ class HomeController extends GetxController {
   }
 
   void moveFocusUp() {
+    prevInputVal = fromCtrl.text;
     fromFocus.requestFocus();
   }
 
   void moveFocusDown() {
+    prevInputVal = toCtrl.text;
     toFocus.requestFocus();
   }
 
   void handleConversion(String value) {
-    HomeController controller = Get.find();
-    String from = fromUnit.value.uSym ?? fromUnit.value.symbol;
-    String to = toUnit.value.uSym ?? toUnit.value.symbol;
-    if (convOrder == -1) {
-      final temp = from;
-      from = to;
-      to = temp;
-    }
+    if (value.isNotEmpty) {
+      HomeController controller = Get.find();
+      String from = fromUnit.value.uSym ?? fromUnit.value.symbol;
+      String to = toUnit.value.uSym ?? toUnit.value.symbol;
+      if (convOrder == -1) {
+        final temp = from;
+        from = to;
+        to = temp;
+      }
 
-    print('Converting from: $from to $to');
+      print('Converting from: $from to $to');
+      final result = convert(
+        quantityType.value,
+        num.parse(value),
+        from,
+        to
+      );
+
+      print('Result: $result');
+      if (convOrder == 1) {
+        toCtrl.text = result.toString();
+      } else {
+        fromCtrl.text = result.toString();
+      }
+    }
   }
 
-  void Function() c2f = () {
-    print('Celcius to Fahrenheit');
-  };
-
-  void fahrenheitToCelcius() {
-    print('Fahrenheit to Celcius');
+  num convert(QuantityType quantityType, num value, String from, String to) {
+    return value * 2;
   }
 
 }
