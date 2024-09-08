@@ -10,15 +10,56 @@ pub trait TimeTrait {
 }
 
 #[derive(Debug)]
+pub struct TimeUnit {
+  value: f64,
+  title: String,
+  symbol: String
+}
+impl QuantityUnit for TimeUnit {
+  fn from_symbol(value: f64, sym: &str) -> Self {
+    match sym {
+      ms @ "ms" => Self {
+        value,
+        title: String::from("Milliseconds"),
+        symbol: String::from(ms)
+      },
+      s @ "s" => Self {
+        value,
+        title: String::from("Seconds"),
+        symbol: String::from(s)
+      },
+      min @ "min" => Self {
+        value,
+        title: String::from("Minutes"),
+        symbol: String::from(min)
+      },
+      _ => panic!("Invalid symbol")
+    }
+  }
+
+  fn value(&self) -> f64 {
+    self.value
+  }
+
+  fn title(&self) -> &str {
+    &self.title
+  }
+
+  fn symbol(&self) -> &str {
+    &self.symbol
+  }
+}
+
+#[derive(Debug)]
 pub enum Time {
-  Milliseconds(QuantityUnit),
-  Seconds(QuantityUnit),
-  Minutes(QuantityUnit)
+  Milliseconds(TimeUnit),
+  Seconds(TimeUnit),
+  Minutes(TimeUnit)
 }
 
 impl Time {
   pub fn from_millis(x: f64) -> Self {
-    Time::Milliseconds(QuantityUnit::from_symbol(x, "ms"))
+    Time::Milliseconds(TimeUnit::from_symbol(x, "ms"))
   }
 
   pub fn from_secs(x: f64) -> Self {
@@ -29,7 +70,7 @@ impl Time {
     Time::Minutes(QuantityUnit::from_symbol(x, "min"))
   }
 
-  pub fn value(self) -> QuantityUnit {
+  pub fn value(self) -> TimeUnit {
     match self {
       Time::Milliseconds(u) |
       Time::Seconds(u) |

@@ -1,6 +1,6 @@
 mod quantity;
 
-use quantity::time::{Time, TimeTrait};
+use quantity::{time::{Time, TimeTrait}, QuantityUnit};
 
 fn secs_to_mins(x: f64) -> f64{
   let seconds = Time::from_secs(120f64);
