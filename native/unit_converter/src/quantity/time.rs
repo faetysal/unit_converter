@@ -3,13 +3,14 @@ use once_cell::sync::Lazy;
 
 use super::QuantityUnit;
 
-const secs_to_mins: fn(f64) -> f64 = |x| {
-  x / 60_f64
-};
+mod conversion;
+use conversion::*;
 
 static CONVMAP: Lazy<HashMap<(String, String), fn(f64) -> f64>> = Lazy::new(|| {
   HashMap::from([
-    (("s".to_string(), "min".to_string()), secs_to_mins)
+    (("s".to_string(), "min".to_string()), SECS_TO_MINS),
+    (("s".to_string(), "h".to_string()), SECS_TO_HOURS),
+    (("s".to_string(), "d".to_string()), SECS_TO_DAYS),
   ])
 });
 
@@ -38,6 +39,16 @@ impl QuantityUnit for TimeUnit {
         value: 0_f64,
         title: String::from("Minutes"),
         symbol: String::from(min)
+      },
+      h @ "h" => Self {
+        value: 0_f64,
+        title: String::from("Hours"),
+        symbol: String::from(h)
+      },
+      d @ "d" => Self {
+        value: 0_f64,
+        title: String::from("Days"),
+        symbol: String::from(d)
       },
       _ => panic!("Invalid symbol")
     }
@@ -78,7 +89,8 @@ pub enum Time {
   Milliseconds(TimeUnit),
   Seconds(TimeUnit),
   Minutes(TimeUnit),
-  Hours(TimeUnit)
+  Hours(TimeUnit),
+  Days(TimeUnit)
 }
 
 impl Time {
@@ -87,7 +99,8 @@ impl Time {
       Time::Milliseconds(u) |
       Time::Seconds(u) |
       Time::Minutes(u) |
-      Time::Hours(u)
+      Time::Hours(u) |
+      Time::Days(u) 
       => u
     }
   }
@@ -106,23 +119,24 @@ impl Time {
 
 
   pub fn to_minutes(self) -> Self {
-    let unit_min: TimeUnit = TimeUnit::from_symbol("min");
-    let result: TimeUnit = Time::to_unit(self).to(unit_min);
-    
-    /*let result = match self {
-      Time::Milliseconds(q) => Time::millis_to_mins(q.value),
-      Time::Seconds(q) => Time::secs_to_mins(q.value),
-      Time::Minutes(q) => Time::mins_to_mins(q.value)
-      };*/
+    let unit_mins: TimeUnit = TimeUnit::from_symbol("min");
+    let result: TimeUnit = Time::to_unit(self).to(unit_mins);
       
-      Self::Minutes(result)
-    }
+     Self::Minutes(result)
+  }
     
   pub fn to_hours(self) -> Self {
-    let unit_hour: TimeUnit = TimeUnit::from_symbol("h");
-    let result: TimeUnit = Time::to_unit(self).to(unit_hour);
+    let unit_hours: TimeUnit = TimeUnit::from_symbol("h");
+    let result: TimeUnit = Time::to_unit(self).to(unit_hours);
   
     Self::Hours(result)
+  }
+
+  pub fn to_days(self) -> Self {
+    let unit_days: TimeUnit = TimeUnit::from_symbol("d");
+    let result: TimeUnit = Time::to_unit(self).to(unit_days);
+  
+    Self::Days(result)
   }
 
 
@@ -134,10 +148,6 @@ impl Time {
 
   fn secs_to_millis(x: f64) -> f64 { 0_f64 }
   fn secs_to_secs(x: f64) -> f64 { 0_f64 }
-  fn secs_to_mins(x: f64) -> f64 {
-    x / 60_f64
-  }
-  fn secs_to_hours(x: f64) -> f64 { 0_f64 }
   fn secs_to_days(x: f64) -> f64 { 0_f64 }
 
   fn mins_to_millis(x: f64) -> f64 { 0_f64 }
