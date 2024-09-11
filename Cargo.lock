@@ -508,6 +508,9 @@ dependencies = [
 [[package]]
 name = "unit_converter"
 version = "0.1.0"
+dependencies = [
+ "once_cell",
+]
 
 [[package]]
 name = "untrusted"

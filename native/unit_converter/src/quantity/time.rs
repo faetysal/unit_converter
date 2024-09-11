@@ -1,27 +1,17 @@
 use std::collections::HashMap;
+use once_cell::sync::Lazy;
+
 use super::QuantityUnit;
 
 const secs_to_mins: fn(f64) -> f64 = |x| {
   x / 60_f64
 };
 
-// #[derive(Hash, Eq, PartialEq, Debug)]
-struct Conversion {
-  /*from: TimeUnit,
-  to: TimeUnit,*/
-  fmap: HashMap<(String, String), fn(f64) -> f64>
-}
-
-impl Conversion {
-  fn init() -> Self {
-    let map = HashMap::from([
-      (("s".to_string(), "min".to_string()), secs_to_mins)
-    ]);
-
-    Self { fmap: map }
-    
-  }
-}
+static CONVMAP: Lazy<HashMap<(String, String), fn(f64) -> f64>> = Lazy::new(|| {
+  HashMap::from([
+    (("s".to_string(), "min".to_string()), secs_to_mins)
+  ])
+});
 
 // #[derive(Hash, Eq, PartialEq, Debug)]
 #[derive(Debug)]
@@ -74,9 +64,7 @@ impl QuantityUnit for TimeUnit {
 
 impl TimeUnit {
   fn to(self, other: Self) -> Self {
-    let conversion = Conversion::init();
-    let convert = conversion
-      .fmap
+    let convert = CONVMAP
       .get(&(self.symbol, other.symbol.clone()))
       .unwrap();
     let result = convert(self.value);
