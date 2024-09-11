@@ -6,7 +6,9 @@ pub mod time;
 // trait Number: Copy + Add + Sub + Mul + Div {}
 
 pub trait QuantityUnit {
-  fn from_symbol(value: f64, sym: &str) -> Self;
+  fn from_symbol(sym: &str) -> Self;
+
+  fn with_value(value: f64, sym: &str) -> Self;
 
   fn value(&self) -> f64;
 

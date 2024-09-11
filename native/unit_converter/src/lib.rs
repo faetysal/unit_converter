@@ -1,12 +1,12 @@
 mod quantity;
 
-use quantity::{time::{Time, TimeTrait}, QuantityUnit};
+use quantity::{time::{Time}, QuantityUnit};
 
 fn secs_to_mins(x: f64) -> f64{
   let seconds = Time::from_secs(120f64);
   let minutes = Time::to_minutes(seconds);
   println!("minutes: {:#?}", minutes);
-  let unit = minutes.value();
+  let unit = minutes.to_unit();
   let v = unit.value();
   let t = unit.title();
   println!("Title: {t}");
