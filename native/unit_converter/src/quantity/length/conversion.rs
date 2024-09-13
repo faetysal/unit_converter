@@ -74,3 +74,36 @@ pub const YD_TO_YD: fn(f64) -> f64 = |x| x;
 pub const YD_TO_MI: fn(f64) -> f64 = |x| x / 1760_f64;
 pub const YD_TO_NM: fn(f64) -> f64 = |x| x / 2025_f64;
 pub const YD_TO_MIL: fn(f64) -> f64 = |x| x * 36000_f64;
+
+pub const MI_TO_MM: fn(f64) -> f64 = |x| x * (1.609 * 10_f64.powi(6));
+pub const MI_TO_CM: fn(f64) -> f64 = |x| x * 160900_f64;
+pub const MI_TO_M: fn(f64) -> f64 = |x| x * 1609_f64;
+pub const MI_TO_KM: fn(f64) -> f64 = |x| x * 1.609;
+pub const MI_TO_IN: fn(f64) -> f64 = |x| x * 63360_f64;
+pub const MI_TO_FT: fn(f64) -> f64 = |x| x * 5280_f64;
+pub const MI_TO_YD: fn(f64) -> f64 = |x| x * 1760_f64;
+pub const MI_TO_MI: fn(f64) -> f64 = |x| x;
+pub const MI_TO_NM: fn(f64) -> f64 = |x| x / 1.151;
+pub const MI_TO_MIL: fn(f64) -> f64 = |x| x * (6.336 * 10_f64.powi(7));
+
+pub const NM_TO_MM: fn(f64) -> f64 = |x| x * (1.852 * 10_f64.powi(6));
+pub const NM_TO_CM: fn(f64) -> f64 = |x| x * 185200_f64;
+pub const NM_TO_M: fn(f64) -> f64 = |x| x * 1852_f64;
+pub const NM_TO_KM: fn(f64) -> f64 = |x| x * 1.852;
+pub const NM_TO_IN: fn(f64) -> f64 = |x| x * 72910_f64;
+pub const NM_TO_FT: fn(f64) -> f64 = |x| x * 6076_f64;
+pub const NM_TO_YD: fn(f64) -> f64 = |x| x * 2025_f64;
+pub const NM_TO_MI: fn(f64) -> f64 = |x| x * 1.151;
+pub const NM_TO_NM: fn(f64) -> f64 = |x| x;
+pub const NM_TO_MIL: fn(f64) -> f64 = |x| x * (7.291 * 10_f64.powi(7));
+
+pub const MIL_TO_MM: fn(f64) -> f64 = |x| x / 39.37;
+pub const MIL_TO_CM: fn(f64) -> f64 = |x| x / 393.7;
+pub const MIL_TO_M: fn(f64) -> f64 = |x| x / 39370_f64;
+pub const MIL_TO_KM: fn(f64) -> f64 = |x| x * (3.937 * 10_f64.powi(7));
+pub const MIL_TO_IN: fn(f64) -> f64 = |x| x / 1000_f64;
+pub const MIL_TO_FT: fn(f64) -> f64 = |x| x / 12000_f64;
+pub const MIL_TO_YD: fn(f64) -> f64 = |x| x / 36000_f64;
+pub const MIL_TO_MI: fn(f64) -> f64 = |x| x / (6.336 * 10_f64.powi(7));
+pub const MIL_TO_NM: fn(f64) -> f64 = |x| x / (7.291 * 10_f64.powi(7));
+pub const MIL_TO_MIL: fn(f64) -> f64 = |x| x;
