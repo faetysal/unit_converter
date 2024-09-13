@@ -120,7 +120,7 @@ impl Time {
     let unit_mins: TimeUnit = TimeUnit::from_symbol("min");
     let result: TimeUnit = Time::to_unit(self).to(unit_mins);
       
-     Self::Minutes(result)
+    Self::Minutes(result)
   }
     
   pub fn to_hours(self) -> Self {

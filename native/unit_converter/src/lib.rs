@@ -28,7 +28,7 @@ fn secs_to_hours(x: f64) -> f64{
   v
 }
 
-fn secs_to_days(x: f64) -> f64{
+fn secs_to_days(x: f64) -> f64 {
   let seconds = Time::from_secs(x);
   let days = Time::to_days(seconds);
   println!("days: {:#?}", days);
@@ -37,6 +37,15 @@ fn secs_to_days(x: f64) -> f64{
   let t = unit.title();
   println!("Title: {t}");
   v
+}
+
+fn mm_to_m(x: f64) -> f64 {
+  let mm = Length::from_mm(x);
+  let m = Length::to_m(mm);
+  let unit = m.to_unit();
+  println!("M: {:#?}", unit);
+
+  unit.value()
 }
 
 #[cfg(test)]
@@ -56,5 +65,10 @@ mod tests {
   #[test]
   fn test_seconds_to_days() {
     assert_eq!(7_f64, secs_to_days(604800_f64));
+  }
+
+  #[test]
+  fn test_mm_to_m() {
+    assert_eq!(1.5, mm_to_m(1500_f64));
   }
 }
