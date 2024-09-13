@@ -60,6 +60,15 @@ impl QuantityUnit for TimeUnit {
     unit
   }
 
+  fn to(self, other: Self) -> Self {
+    let convert = CONVMAP
+      .get(&(self.symbol, other.symbol.clone()))
+      .unwrap();
+    let result = convert(self.value);
+  
+    TimeUnit::with_value(result, &other.symbol)
+  }
+
   fn value(&self) -> f64 {
     self.value
   }
@@ -70,17 +79,6 @@ impl QuantityUnit for TimeUnit {
 
   fn symbol(&self) -> &str {
     &self.symbol
-  }
-}
-
-impl TimeUnit {
-  fn to(self, other: Self) -> Self {
-    let convert = CONVMAP
-      .get(&(self.symbol, other.symbol.clone()))
-      .unwrap();
-    let result = convert(self.value);
-
-    TimeUnit::with_value(result, &other.symbol)
   }
 }
 
