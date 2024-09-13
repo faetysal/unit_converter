@@ -8,9 +8,35 @@ use conversion::*;
 
 static CONVMAP: Lazy<HashMap<(String, String), fn(f64) -> f64>> = Lazy::new(|| {
   HashMap::from([
+    (("ms".to_string(), "ms".to_string()), MILLIS_TO_MILLIS),
+    (("ms".to_string(), "s".to_string()), MILLIS_TO_SECS),
+    (("ms".to_string(), "min".to_string()), MILLIS_TO_MINS),
+    (("ms".to_string(), "h".to_string()), MILLIS_TO_HOURS),
+    (("ms".to_string(), "d".to_string()), MILLIS_TO_DAYS),
+
+    (("s".to_string(), "ms".to_string()), SECS_TO_MILLIS),
+    (("s".to_string(), "s".to_string()), SECS_TO_SECS),
     (("s".to_string(), "min".to_string()), SECS_TO_MINS),
     (("s".to_string(), "h".to_string()), SECS_TO_HOURS),
     (("s".to_string(), "d".to_string()), SECS_TO_DAYS),
+
+    (("min".to_string(), "ms".to_string()), MINS_TO_MILLIS),
+    (("min".to_string(), "s".to_string()), MINS_TO_SECS),
+    (("min".to_string(), "min".to_string()), MINS_TO_MINS),
+    (("min".to_string(), "h".to_string()), MINS_TO_HOURS),
+    (("min".to_string(), "d".to_string()), MINS_TO_DAYS),
+
+    (("h".to_string(), "ms".to_string()), HOURS_TO_MILLIS),
+    (("h".to_string(), "s".to_string()), HOURS_TO_SECS),
+    (("h".to_string(), "min".to_string()), HOURS_TO_MINS),
+    (("h".to_string(), "h".to_string()), HOURS_TO_HOURS),
+    (("h".to_string(), "d".to_string()), HOURS_TO_DAYS),
+    
+    (("d".to_string(), "ms".to_string()), DAYS_TO_MILLIS),
+    (("d".to_string(), "s".to_string()), DAYS_TO_SECS),
+    (("d".to_string(), "min".to_string()), DAYS_TO_MINS),
+    (("d".to_string(), "h".to_string()), DAYS_TO_HOURS),
+    (("d".to_string(), "d".to_string()), DAYS_TO_DAYS)
   ])
 });
 
@@ -115,6 +141,28 @@ impl Time {
     Time::Minutes(TimeUnit::with_value(x, "min"))
   }
 
+  pub fn from_hours(x: f64) -> Self {
+    Time::Hours(TimeUnit::with_value(x, "h"))
+  }
+
+  pub fn from_days(x: f64) -> Self {
+    Time::Days(TimeUnit::with_value(x, "d"))
+  }
+
+
+  pub fn to_millis(self) -> Self {
+    let unit_millis: TimeUnit = TimeUnit::from_symbol("ms");
+    let result: TimeUnit = Time::to_unit(self).to(unit_millis);
+      
+    Self::Milliseconds(result)
+  }
+
+  pub fn to_secs(self) -> Self {
+    let unit_secs: TimeUnit = TimeUnit::from_symbol("s");
+    let result: TimeUnit = Time::to_unit(self).to(unit_secs);
+      
+    Self::Seconds(result)
+  }
 
   pub fn to_minutes(self) -> Self {
     let unit_mins: TimeUnit = TimeUnit::from_symbol("min");
@@ -136,35 +184,6 @@ impl Time {
   
     Self::Days(result)
   }
-
-
-  fn millis_to_millis(x: f64) -> f64 { 0_f64 }
-  fn millis_to_secs(x: f64) -> f64 { 0_f64 }
-  fn millis_to_mins(x: f64) -> f64 { 0_f64 }
-  fn millis_to_hours(x: f64) -> f64 { 0_f64 }
-  fn millis_to_days(x: f64) -> f64 { 0_f64 }
-
-  fn secs_to_millis(x: f64) -> f64 { 0_f64 }
-  fn secs_to_secs(x: f64) -> f64 { 0_f64 }
-  fn secs_to_days(x: f64) -> f64 { 0_f64 }
-
-  fn mins_to_millis(x: f64) -> f64 { 0_f64 }
-  fn mins_to_secs(x: f64) -> f64 { 0_f64 }
-  fn mins_to_mins(x: f64) -> f64 { 0_f64 }
-  fn mins_to_hours(x: f64) -> f64 { 0_f64 }
-  fn mins_to_days(x: f64) -> f64 { 0_f64 }
-
-  fn hours_to_millis(x: f64) -> f64 { 0_f64 }
-  fn hours_to_secs(x: f64) -> f64 { 0_f64 }
-  fn hours_to_mins(x: f64) -> f64 { 0_f64 }
-  fn hours_to_hours(x: f64) -> f64 { 0_f64 }
-  fn hours_to_days(x: f64) -> f64 { 0_f64 }
-
-  fn days_to_millis(x: f64) -> f64 { 0_f64 }
-  fn days_to_secs(x: f64) -> f64 { 0_f64 }
-  fn days_to_mins(x: f64) -> f64 { 0_f64 }
-  fn days_to_hours(x: f64) -> f64 { 0_f64 }
-  fn days_to_days(x: f64) -> f64 { 0_f64 }
 }
 
 
