@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
+import 'package:rinf/rinf.dart';
+import 'package:unit_converter/messages/convert.pb.dart';
 
 import 'components/selector.dart';
 import 'models/quantity.dart';
@@ -345,8 +349,6 @@ class HomeController extends GetxController {
     super.onInit();
     fromCtrl = TextEditingController();
     fromCtrl.addListener(() {
-      print('Prev: $prevInputVal');
-      print('Fromtxt: ${fromCtrl.text}');
       if (fromFocus.hasFocus && prevInputVal != fromCtrl.text) {
         if (fromCtrl.text.isNotEmpty) {
           handleConversion(fromCtrl.text);
@@ -381,6 +383,9 @@ class HomeController extends GetxController {
         activeField = (toCtrl, toFocus);
       }
     });
+
+    ConvertResult.rustSignalStream.listen(handleResult);
+
     init();
   }
 
@@ -453,24 +458,33 @@ class HomeController extends GetxController {
       }
 
       print('Converting from: $from to $to');
-      final result = convert(
+      convert(
         quantityType.value,
         num.parse(value),
         from,
         to
       );
-
-      print('Result: $result');
-      if (convOrder == 1) {
-        toCtrl.text = result.toString();
-      } else {
-        fromCtrl.text = result.toString();
-      }
     }
   }
 
-  num convert(QuantityType quantityType, num value, String from, String to) {
+  convert(QuantityType quantityType, num value, String from, String to) {
+    print('Converting...');
+    Convert(
+      from: {from: value.toDouble()},
+      to: to
+    ).sendSignalToRust();
+
     return value * 2;
+  }
+
+  handleResult(RustSignal<ConvertResult> sig) {
+    final result = sig.message.value;
+    print('Result: $result');
+    if (convOrder == 1) {
+      toCtrl.text = result.toString();
+    } else {
+      fromCtrl.text = result.toString();
+    }
   }
 
 }

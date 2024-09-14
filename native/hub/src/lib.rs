@@ -8,6 +8,8 @@ use crate::common::*;
 use tokio; // Comment this line to target the web.
 // use tokio_with_wasm::alias as tokio; // Uncomment this line to target the web.
 
+use unit_converter::{self as UC, QuantityUnit};
+
 rinf::write_interface!();
 
 // Use `tokio::spawn` to run concurrent tasks.
@@ -16,18 +18,21 @@ rinf::write_interface!();
 // If you really need to use blocking code,
 // use `tokio::task::spawn_blocking`.
 async fn main() {
-    tokio::spawn(communicate());
+  tokio::spawn(handle_conversion());
 }
 
-async fn communicate() -> Result<()> {
-    use messages::basic::*;
-    // Send signals to Dart like below.
-    SmallNumber { number: 7 }.send_signal_to_dart();
-    // Get receivers that listen to Dart signals like below.
-    let mut receiver = SmallText::get_dart_signal_receiver()?;
+async fn handle_conversion() -> Result<()> {
+    use messages::convert::*;
+    
+    let mut receiver = Convert::get_dart_signal_receiver()?;
     while let Some(dart_signal) = receiver.recv().await {
-        let message: SmallText = dart_signal.message;
-        rinf::debug_print!("{message:?}");
+      let message: Convert = dart_signal.message;
+      let minutes: UC::Time = UC::Time::from_mins(2_f64);
+      let seconds: UC::Time = UC::Time::to_secs(minutes);
+
+      rinf::debug_print!("{seconds:?}");
+
+      ConvertResult { value: seconds.to_unit().value() }.send_signal_to_dart();
     }
     Ok(())
 }

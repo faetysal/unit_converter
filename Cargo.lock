@@ -187,6 +187,7 @@ dependencies = [
  "prost",
  "rinf",
  "tokio",
+ "unit_converter",
 ]
 
 [[package]]

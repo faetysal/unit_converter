@@ -1,12 +1,12 @@
 mod quantity;
 
-use quantity::{
+pub use quantity::{
   QuantityUnit,
   time::Time,
   length::Length
 };
 
-fn secs_to_mins(x: f64) -> f64{
+/*fn secs_to_mins(x: f64) -> f64{
   let seconds = Time::from_secs(x);
   let minutes = Time::to_minutes(seconds);
   println!("minutes: {:#?}", minutes);
@@ -71,4 +71,4 @@ mod tests {
   fn test_mm_to_m() {
     assert_eq!(1.5, mm_to_m(1500_f64));
   }
-}
+}*/

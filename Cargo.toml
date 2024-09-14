@@ -4,5 +4,5 @@
 # various Rust configurations.
 
 [workspace]
-members = ["./native/*", "native/unit_converter"]
+members = ["./native/*"]
 resolver = "2"

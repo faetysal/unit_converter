@@ -1,0 +1,13 @@
+syntax = "proto3";
+package convert;
+
+// [RINF:DART-SIGNAL]
+message Convert {
+  map<string, double> from = 1;
+  string to = 2;
+}
+
+// [RINF:RUST-SIGNAL]
+message ConvertResult {
+  double value = 1;
+}
