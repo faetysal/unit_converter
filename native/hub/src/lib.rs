@@ -4,11 +4,13 @@
 mod common;
 mod messages;
 
+use std::collections::HashMap;
+
 use crate::common::*;
 use tokio; // Comment this line to target the web.
 // use tokio_with_wasm::alias as tokio; // Uncomment this line to target the web.
 
-use unit_converter::{self as UC, QuantityUnit};
+use unit_converter::*;
 
 rinf::write_interface!();
 
@@ -27,12 +29,35 @@ async fn handle_conversion() -> Result<()> {
     let mut receiver = Convert::get_dart_signal_receiver()?;
     while let Some(dart_signal) = receiver.recv().await {
       let message: Convert = dart_signal.message;
-      let minutes: UC::Time = UC::Time::from_mins(2_f64);
-      let seconds: UC::Time = UC::Time::to_secs(minutes);
+      let result: f64 = match message.quantity.as_str() {
+        "length" => { 0.0 },
+        "time" => {
+          let time_from: Time = match message.from.as_str() {
+            "ms" => Time::from_millis(message.value),
+            "s" => Time::from_secs(message.value),
+            "min" => Time::from_mins(message.value),
+            "h" => Time::from_hours(message.value),
+            "d" => Time::from_days(message.value),
+            _ => panic!("Invalid time symbol")
+          };
+          
+          let time_to: Time = match message.to.as_str() {
+            "ms" => Time::to_millis(time_from),
+            "s" => Time::to_secs(time_from),
+            "min" => Time::to_mins(time_from),
+            "h" => Time::to_hours(time_from),
+            "d" => Time::to_days(time_from),
+            _ => panic!("Invalid time symbol")
+          };
 
-      rinf::debug_print!("{seconds:?}");
+          time_to.to_unit().value()
+        },
+        _ => panic!("Inavlid quantity type")
+      };
 
-      ConvertResult { value: seconds.to_unit().value() }.send_signal_to_dart();
+      rinf::debug_print!("Result: {result:?}");
+
+      ConvertResult { value: result }.send_signal_to_dart();
     }
     Ok(())
 }

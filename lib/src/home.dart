@@ -470,8 +470,10 @@ class HomeController extends GetxController {
   convert(QuantityType quantityType, num value, String from, String to) {
     print('Converting...');
     Convert(
-      from: {from: value.toDouble()},
-      to: to
+      quantity: quantityType.toString(),
+      from: from,
+      to: to,
+      value: value.toDouble(),
     ).sendSignalToRust();
 
     return value * 2;
@@ -481,10 +483,23 @@ class HomeController extends GetxController {
     final result = sig.message.value;
     print('Result: $result');
     if (convOrder == 1) {
-      toCtrl.text = result.toString();
+      toCtrl.text = _handleValue(result);
     } else {
-      fromCtrl.text = result.toString();
+      fromCtrl.text = _handleValue(result);
     }
+  }
+
+  String _handleValue(double x) {
+    if (x.toString().contains('e')) {
+      return x.toString();
+    }
+
+    final decLen = x.toString().split('.')[1].length;
+    final result = x.toStringAsFixed(
+      x.truncateToDouble() == x ? 0 : (decLen > 10 ? 10 : decLen)
+    );
+
+    return result;
   }
 
 }

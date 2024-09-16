@@ -2,7 +2,7 @@ mod quantity;
 
 pub use quantity::{
   QuantityUnit,
-  time::Time,
+  time::{TimeUnit, Time},
   length::Length
 };
 

@@ -100,6 +100,11 @@ enum QuantityType {
 
   const QuantityType(this.units);
   final List<QuantityUnit> units;
+
+  @override
+  String toString() {
+    return name;
+  }
 }
 
 class QuantityUnit {

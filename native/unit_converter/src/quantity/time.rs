@@ -164,7 +164,7 @@ impl Time {
     Self::Seconds(result)
   }
 
-  pub fn to_minutes(self) -> Self {
+  pub fn to_mins(self) -> Self {
     let unit_mins: TimeUnit = TimeUnit::from_symbol("min");
     let result: TimeUnit = Time::to_unit(self).to(unit_mins);
       
