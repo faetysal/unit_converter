@@ -32,25 +32,10 @@ async fn handle_conversion() -> Result<()> {
       let result: f64 = match message.quantity.as_str() {
         "length" => { 0.0 },
         "time" => {
-          let time_from: Time = match message.from.as_str() {
-            "ms" => Time::from_millis(message.value),
-            "s" => Time::from_secs(message.value),
-            "min" => Time::from_mins(message.value),
-            "h" => Time::from_hours(message.value),
-            "d" => Time::from_days(message.value),
-            _ => panic!("Invalid time symbol")
-          };
-          
-          let time_to: Time = match message.to.as_str() {
-            "ms" => Time::to_millis(time_from),
-            "s" => Time::to_secs(time_from),
-            "min" => Time::to_mins(time_from),
-            "h" => Time::to_hours(time_from),
-            "d" => Time::to_days(time_from),
-            _ => panic!("Invalid time symbol")
-          };
+          let from_unit = TimeUnit::with_value(message.value, &message.from);
+          let to_unit = TimeUnit::from_symbol(&message.to);
 
-          time_to.to_unit().value()
+          from_unit.to(to_unit).value()
         },
         _ => panic!("Inavlid quantity type")
       };

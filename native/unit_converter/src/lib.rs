@@ -2,22 +2,21 @@ mod quantity;
 
 pub use quantity::{
   QuantityUnit,
-  time::{TimeUnit, Time},
+  time::TimeUnit,
   length::Length
 };
 
-/*fn secs_to_mins(x: f64) -> f64{
-  let seconds = Time::from_secs(x);
-  let minutes = Time::to_minutes(seconds);
+fn secs_to_mins(x: f64) -> f64{
+  let seconds = TimeUnit::from_secs(x);
+  let minutes = seconds.to_mins();
   println!("minutes: {:#?}", minutes);
-  let unit = minutes.to_unit();
-  let v = unit.value();
-  let t = unit.title();
+  let v = minutes.value();
+  let t = minutes.title();
   println!("Title: {t}");
   v
 }
 
-fn secs_to_hours(x: f64) -> f64{
+/*fn secs_to_hours(x: f64) -> f64{
   let seconds = Time::from_secs(x);
   let hours = Time::to_hours(seconds);
   println!("hours: {:#?}", hours);
@@ -46,7 +45,7 @@ fn mm_to_m(x: f64) -> f64 {
   println!("M: {:#?}", unit);
 
   unit.value()
-}
+}*/
 
 #[cfg(test)]
 mod tests {
@@ -57,7 +56,7 @@ mod tests {
     assert_eq!(2_f64, secs_to_mins(120_f64));
   }
 
-  #[test]
+  /*#[test]
   fn test_seconds_to_hours() {
     assert_eq!(4_f64, secs_to_hours(14400_f64));
   }
@@ -70,5 +69,5 @@ mod tests {
   #[test]
   fn test_mm_to_m() {
     assert_eq!(1.5, mm_to_m(1500_f64));
-  }
-}*/
+  }*/
+}

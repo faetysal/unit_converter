@@ -76,6 +76,11 @@ impl QuantityUnit for TimeUnit {
         title: String::from("Days"),
         symbol: String::from(d)
       },
+      wk @ "wk" => Self {
+        value: 0_f64,
+        title: String::from("Weeks"),
+        symbol: String::from(wk)
+      },
       _ => panic!("Invalid symbol")
     }
   }
@@ -108,84 +113,52 @@ impl QuantityUnit for TimeUnit {
   }
 }
 
-#[derive(Debug)]
-pub enum Time {
-  Milliseconds(TimeUnit),
-  Seconds(TimeUnit),
-  Minutes(TimeUnit),
-  Hours(TimeUnit),
-  Days(TimeUnit)
-}
-
-impl Time {
-  pub fn to_unit(self) -> TimeUnit {
-    match self {
-      Time::Milliseconds(u) |
-      Time::Seconds(u) |
-      Time::Minutes(u) |
-      Time::Hours(u) |
-      Time::Days(u) 
-      => u
-    }
+impl TimeUnit {
+  pub fn from_millis(value: f64) -> Self {
+    Self::with_value(value, "ms")
   }
 
-  pub fn from_millis(x: f64) -> Self {
-    Time::Milliseconds(TimeUnit::with_value(x, "ms"))
+  pub fn from_secs(value: f64) -> Self {
+    Self::with_value(value, "s")
   }
 
-  pub fn from_secs(x: f64) -> Self {
-    Time::Seconds(TimeUnit::with_value(x, "s"))
+  pub fn from_mins(value: f64) -> Self {
+    Self::with_value(value, "min")
   }
 
-  pub fn from_mins(x: f64) -> Self {
-    Time::Minutes(TimeUnit::with_value(x, "min"))
+  pub fn from_hours(value: f64) -> Self {
+    Self::with_value(value, "h")
   }
 
-  pub fn from_hours(x: f64) -> Self {
-    Time::Hours(TimeUnit::with_value(x, "h"))
+  pub fn from_days(value: f64) -> Self {
+    Self::with_value(value, "d")
   }
 
-  pub fn from_days(x: f64) -> Self {
-    Time::Days(TimeUnit::with_value(x, "d"))
+  pub fn from_weeks(value: f64) -> Self {
+    Self::with_value(value, "wk")
   }
-
 
   pub fn to_millis(self) -> Self {
-    let unit_millis: TimeUnit = TimeUnit::from_symbol("ms");
-    let result: TimeUnit = Time::to_unit(self).to(unit_millis);
-      
-    Self::Milliseconds(result)
+    self.to(TimeUnit::from_symbol("ms"))
   }
 
   pub fn to_secs(self) -> Self {
-    let unit_secs: TimeUnit = TimeUnit::from_symbol("s");
-    let result: TimeUnit = Time::to_unit(self).to(unit_secs);
-      
-    Self::Seconds(result)
+    self.to(TimeUnit::from_symbol("s"))
   }
 
   pub fn to_mins(self) -> Self {
-    let unit_mins: TimeUnit = TimeUnit::from_symbol("min");
-    let result: TimeUnit = Time::to_unit(self).to(unit_mins);
-      
-    Self::Minutes(result)
+    self.to(TimeUnit::from_symbol("min"))
   }
-    
+
   pub fn to_hours(self) -> Self {
-    let unit_hours: TimeUnit = TimeUnit::from_symbol("h");
-    let result: TimeUnit = Time::to_unit(self).to(unit_hours);
-  
-    Self::Hours(result)
+    self.to(TimeUnit::from_symbol("h"))
   }
 
   pub fn to_days(self) -> Self {
-    let unit_days: TimeUnit = TimeUnit::from_symbol("d");
-    let result: TimeUnit = Time::to_unit(self).to(unit_days);
-  
-    Self::Days(result)
+    self.to(TimeUnit::from_symbol("d"))
+  }
+
+  pub fn to_weeks(self) -> Self {
+    self.to(TimeUnit::from_symbol("wk"))
   }
 }
-
-
-
-
