@@ -203,144 +203,85 @@ impl QuantityUnit for LengthUnit {
   }
 }
 
-#[derive(Debug)]
-pub enum Length {
-  Millimetres(LengthUnit),
-  Centimetres(LengthUnit),
-  Metres(LengthUnit),
-  Kilometres(LengthUnit),
-  Inches(LengthUnit),
-  Feet(LengthUnit),
-  Yards(LengthUnit),
-  Miles(LengthUnit),
-  NauticalMiles(LengthUnit),
-  Mils(LengthUnit)
-}
-
-impl Length {
-  pub fn to_unit(self) -> LengthUnit {
-    match self {
-      Length::Millimetres(u) |
-      Length::Centimetres(u) |
-      Length::Metres(u) |
-      Length::Kilometres(u) |
-      Length::Inches(u) |
-      Length::Feet(u) |
-      Length::Yards(u) |
-      Length::Miles(u) |
-      Length::NauticalMiles(u) |
-      Length::Mils(u) => u
-    }
-  }
-
+impl LengthUnit {
   pub fn from_mm(x: f64) -> Self {
-    Length::Millimetres(LengthUnit::with_value(x, "mm"))
+    Self::with_value(x, "mm")
   }
 
   pub fn from_cm(x: f64) -> Self {
-    Length::Millimetres(LengthUnit::with_value(x, "cm"))
+    Self::with_value(x, "cm")
   }
 
   pub fn from_m(x: f64) -> Self {
-    Length::Millimetres(LengthUnit::with_value(x, "m"))
+    Self::with_value(x, "m")
   }
 
   pub fn from_km(x: f64) -> Self {
-    Length::Millimetres(LengthUnit::with_value(x, "km"))
+    Self::with_value(x, "km")
   }
 
   pub fn from_in(x: f64) -> Self {
-    Length::Millimetres(LengthUnit::with_value(x, "in"))
+    Self::with_value(x, "in")
   }
 
   pub fn from_ft(x: f64) -> Self {
-    Length::Millimetres(LengthUnit::with_value(x, "ft"))
+    Self::with_value(x, "ft")
   }
 
   pub fn from_yd(x: f64) -> Self {
-    Length::Millimetres(LengthUnit::with_value(x, "yd"))
+    Self::with_value(x, "yd")
   }
 
   pub fn from_mi(x: f64) -> Self {
-    Length::Millimetres(LengthUnit::with_value(x, "mi"))
+    Self::with_value(x, "mi")
   }
 
   pub fn from_nm(x: f64) -> Self {
-    Length::Millimetres(LengthUnit::with_value(x, "nm"))
+    Self::with_value(x, "nm")
   }
 
   pub fn from_mils(x: f64) -> Self {
-    Length::Millimetres(LengthUnit::with_value(x, "mil"))
+    Self::with_value(x, "mil")
   }
 
   pub fn to_mm(self) -> Self {
-    let unit_mm: LengthUnit = LengthUnit::from_symbol("mm");
-    let result: LengthUnit = Length::to_unit(self).to(unit_mm);
-
-    Self::Millimetres(result)
+    self.to(Self::from_symbol("mm"))
   }
 
   pub fn to_cm(self) -> Self {
-    let unit_cm: LengthUnit = LengthUnit::from_symbol("cm");
-    let result: LengthUnit = Length::to_unit(self).to(unit_cm);
-
-    Self::Centimetres(result)
+    self.to(Self::from_symbol("cm"))
   }
 
   pub fn to_m(self) -> Self {
-    let unit_m: LengthUnit = LengthUnit::from_symbol("m");
-    let result: LengthUnit = Length::to_unit(self).to(unit_m);
-
-    Self::Metres(result)
+    self.to(Self::from_symbol("m"))
   }
 
   pub fn to_km(self) -> Self {
-    let unit_km: LengthUnit = LengthUnit::from_symbol("km");
-    let result: LengthUnit = Length::to_unit(self).to(unit_km);
-
-    Self::Kilometres(result)
+    self.to(Self::from_symbol("km"))
   }
 
   pub fn to_in(self) -> Self {
-    let unit_in: LengthUnit = LengthUnit::from_symbol("in");
-    let result: LengthUnit = Length::to_unit(self).to(unit_in);
-
-    Self::Inches(result)
+    self.to(Self::from_symbol("in"))
   }
 
   pub fn to_ft(self) -> Self {
-    let unit_ft: LengthUnit = LengthUnit::from_symbol("ft");
-    let result: LengthUnit = Length::to_unit(self).to(unit_ft);
-
-    Self::Feet(result)
+    self.to(Self::from_symbol("ft"))
   }
 
   pub fn to_yd(self) -> Self {
-    let unit_yd: LengthUnit = LengthUnit::from_symbol("yd");
-    let result: LengthUnit = Length::to_unit(self).to(unit_yd);
-
-    Self::Yards(result)
+    self.to(Self::from_symbol("yd"))
   }
 
   pub fn to_mi(self) -> Self {
-    let unit_mi: LengthUnit = LengthUnit::from_symbol("mi");
-    let result: LengthUnit = Length::to_unit(self).to(unit_mi);
-
-    Self::Miles(result)
+    self.to(Self::from_symbol("mi"))
   }
 
   pub fn to_nm(self) -> Self {
-    let unit_nm: LengthUnit = LengthUnit::from_symbol("nm");
-    let result: LengthUnit = Length::to_unit(self).to(unit_nm);
-
-    Self::NauticalMiles(result)
+    self.to(Self::from_symbol("nm"))
   }
 
   pub fn to_mil(self) -> Self {
-    let unit_mil: LengthUnit = LengthUnit::from_symbol("mil");
-    let result: LengthUnit = Length::to_unit(self).to(unit_mil);
-
-    Self::Mils(result)
+    self.to(Self::from_symbol("mil"))
   }
 }
 

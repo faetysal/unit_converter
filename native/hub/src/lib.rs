@@ -30,7 +30,12 @@ async fn handle_conversion() -> Result<()> {
     while let Some(dart_signal) = receiver.recv().await {
       let message: Convert = dart_signal.message;
       let result: f64 = match message.quantity.as_str() {
-        "length" => { 0.0 },
+        "length" => {
+          let from_unit = LengthUnit::with_value(message.value, &message.from);
+          let to_unit = LengthUnit::from_symbol(&message.to);
+
+          from_unit.to(to_unit).value()
+        },
         "time" => {
           let from_unit = TimeUnit::with_value(message.value, &message.from);
           let to_unit = TimeUnit::from_symbol(&message.to);

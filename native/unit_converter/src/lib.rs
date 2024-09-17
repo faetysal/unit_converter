@@ -3,7 +3,7 @@ mod quantity;
 pub use quantity::{
   QuantityUnit,
   time::TimeUnit,
-  length::Length
+  length::LengthUnit
 };
 
 fn secs_to_mins(x: f64) -> f64{
