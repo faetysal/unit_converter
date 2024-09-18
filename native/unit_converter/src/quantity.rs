@@ -3,6 +3,7 @@
 
 pub mod time;
 pub mod length;
+pub mod area;
 
 // trait Number: Copy + Add + Sub + Mul + Div {}
 

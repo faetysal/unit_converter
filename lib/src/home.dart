@@ -449,8 +449,8 @@ class HomeController extends GetxController {
   void handleConversion(String value) {
     if (value.isNotEmpty) {
       HomeController controller = Get.find();
-      String from = fromUnit.value.uSym ?? fromUnit.value.symbol;
-      String to = toUnit.value.uSym ?? toUnit.value.symbol;
+      String from = fromUnit.value.symbolStr;
+      String to = toUnit.value.symbolStr;
       if (convOrder == -1) {
         final temp = from;
         from = to;

@@ -127,6 +127,15 @@ class QuantityUnit {
       symbol: symbol
     );
   }
+
+  String get symbolStr {
+    String sym = uSym ?? symbol;
+    if (sup != null) {
+      sym += "^$sup";
+    }
+
+    return sym;
+  }
 }
 
 /*class FunctionMap {

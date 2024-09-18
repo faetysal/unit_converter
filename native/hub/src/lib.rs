@@ -4,8 +4,6 @@
 mod common;
 mod messages;
 
-use std::collections::HashMap;
-
 use crate::common::*;
 use tokio; // Comment this line to target the web.
 // use tokio_with_wasm::alias as tokio; // Uncomment this line to target the web.
@@ -42,6 +40,12 @@ async fn handle_conversion() -> Result<()> {
 
           from_unit.to(to_unit).value()
         },
+        "area" => {
+          let from_unit = AreaUnit::with_value(message.value, &message.from);
+          let to_unit = AreaUnit::from_symbol(&message.to);
+
+          from_unit.to(to_unit).value()
+        }
         _ => panic!("Inavlid quantity type")
       };
 
