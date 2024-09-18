@@ -481,7 +481,7 @@ class HomeController extends GetxController {
 
   handleResult(RustSignal<ConvertResult> sig) {
     final result = sig.message.value;
-    print('Result: $result');
+    print('Dart Result: $result');
     if (convOrder == 1) {
       toCtrl.text = _handleValue(result);
     } else {

@@ -45,7 +45,7 @@ async fn handle_conversion() -> Result<()> {
         _ => panic!("Inavlid quantity type")
       };
 
-      rinf::debug_print!("Result: {result:?}");
+      rinf::debug_print!("Rust Result: {result:?}");
 
       ConvertResult { value: result }.send_signal_to_dart();
     }

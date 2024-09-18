@@ -13,30 +13,42 @@ static CONVMAP: Lazy<HashMap<(String, String), fn(f64) -> f64>> = Lazy::new(|| {
     (("ms".to_string(), "min".to_string()), MILLIS_TO_MINS),
     (("ms".to_string(), "h".to_string()), MILLIS_TO_HOURS),
     (("ms".to_string(), "d".to_string()), MILLIS_TO_DAYS),
+    (("ms".to_string(), "wk".to_string()), MILLIS_TO_WEEKS),
 
     (("s".to_string(), "ms".to_string()), SECS_TO_MILLIS),
     (("s".to_string(), "s".to_string()), SECS_TO_SECS),
     (("s".to_string(), "min".to_string()), SECS_TO_MINS),
     (("s".to_string(), "h".to_string()), SECS_TO_HOURS),
     (("s".to_string(), "d".to_string()), SECS_TO_DAYS),
+    (("s".to_string(), "wk".to_string()), SECS_TO_WEEKS),
 
     (("min".to_string(), "ms".to_string()), MINS_TO_MILLIS),
     (("min".to_string(), "s".to_string()), MINS_TO_SECS),
     (("min".to_string(), "min".to_string()), MINS_TO_MINS),
     (("min".to_string(), "h".to_string()), MINS_TO_HOURS),
     (("min".to_string(), "d".to_string()), MINS_TO_DAYS),
+    (("min".to_string(), "wk".to_string()), MINS_TO_WEEKS),
 
     (("h".to_string(), "ms".to_string()), HOURS_TO_MILLIS),
     (("h".to_string(), "s".to_string()), HOURS_TO_SECS),
     (("h".to_string(), "min".to_string()), HOURS_TO_MINS),
     (("h".to_string(), "h".to_string()), HOURS_TO_HOURS),
     (("h".to_string(), "d".to_string()), HOURS_TO_DAYS),
+    (("h".to_string(), "wk".to_string()), HOURS_TO_WEEKS),
     
     (("d".to_string(), "ms".to_string()), DAYS_TO_MILLIS),
     (("d".to_string(), "s".to_string()), DAYS_TO_SECS),
     (("d".to_string(), "min".to_string()), DAYS_TO_MINS),
     (("d".to_string(), "h".to_string()), DAYS_TO_HOURS),
-    (("d".to_string(), "d".to_string()), DAYS_TO_DAYS)
+    (("d".to_string(), "d".to_string()), DAYS_TO_DAYS),
+    (("d".to_string(), "wk".to_string()), DAYS_TO_WEEKS),
+
+    (("wk".to_string(), "ms".to_string()), WEEKS_TO_MILLIS),
+    (("wk".to_string(), "s".to_string()), WEEKS_TO_SECS),
+    (("wk".to_string(), "min".to_string()), WEEKS_TO_MINS),
+    (("wk".to_string(), "h".to_string()), WEEKS_TO_HOURS),
+    (("wk".to_string(), "d".to_string()), WEEKS_TO_DAYS),
+    (("wk".to_string(), "wk".to_string()), WEEKS_TO_WEEKS)
   ])
 });
 

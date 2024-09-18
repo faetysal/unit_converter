@@ -28,7 +28,7 @@ static CONVMAP: Lazy<HashMap<(String, String), fn(f64) -> f64>> = Lazy::new(|| {
     (("cm".to_string(), "mi".to_string()), CM_TO_MI),
     (("cm".to_string(), "nm".to_string()), CM_TO_NM),
     (("cm".to_string(), "mil".to_string()), CM_TO_MIL),
-    (("m".to_string(), "mm".to_string()), M_TO_M),
+    (("m".to_string(), "mm".to_string()), M_TO_MM),
     (("m".to_string(), "cm".to_string()), M_TO_CM),
     (("m".to_string(), "m".to_string()), M_TO_M),
     (("m".to_string(), "km".to_string()), M_TO_KM),
