@@ -5,6 +5,7 @@ pub mod time;
 pub mod length;
 pub mod area;
 pub mod temperature;
+pub mod volume;
 
 // trait Number: Copy + Add + Sub + Mul + Div {}
 

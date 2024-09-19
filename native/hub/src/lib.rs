@@ -52,6 +52,12 @@ async fn handle_conversion() -> Result<()> {
 
           from_unit.to(to_unit).value()
         },
+        "volume" => {
+          let from_unit = VolumeUnit::with_value(message.value, &message.from);
+          let to_unit = VolumeUnit::from_symbol(&message.to);
+
+          from_unit.to(to_unit).value()
+        },
         _ => panic!("Inavlid quantity type")
       };
 

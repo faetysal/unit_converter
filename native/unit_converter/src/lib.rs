@@ -5,7 +5,8 @@ pub use quantity::{
   time::TimeUnit,
   length::LengthUnit,
   area::AreaUnit,
-  temperature::TemperatureUnit
+  temperature::TemperatureUnit,
+  volume::VolumeUnit
 };
 
 fn secs_to_mins(x: f64) -> f64{
