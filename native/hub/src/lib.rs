@@ -45,7 +45,13 @@ async fn handle_conversion() -> Result<()> {
           let to_unit = AreaUnit::from_symbol(&message.to);
 
           from_unit.to(to_unit).value()
-        }
+        },
+        "temperature" => {
+          let from_unit = TemperatureUnit::with_value(message.value, &message.from);
+          let to_unit = TemperatureUnit::from_symbol(&message.to);
+
+          from_unit.to(to_unit).value()
+        },
         _ => panic!("Inavlid quantity type")
       };
 
