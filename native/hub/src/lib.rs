@@ -29,40 +29,46 @@ async fn handle_conversion() -> Result<()> {
       let message: Convert = dart_signal.message;
       let result: f64 = match message.quantity.as_str() {
         "length" => {
-          let from_unit = LengthUnit::with_value(message.value, &message.from);
-          let to_unit = LengthUnit::from_symbol(&message.to);
-
-          from_unit.to(to_unit).value()
+          convert::<LengthUnit>(
+            message.value, 
+            &message.from, 
+            &message.to
+          )
         },
         "time" => {
-          let from_unit = TimeUnit::with_value(message.value, &message.from);
-          let to_unit = TimeUnit::from_symbol(&message.to);
-
-          from_unit.to(to_unit).value()
+          convert::<TimeUnit>(
+            message.value,
+            &message.from,
+            &message.to
+          )
         },
         "area" => {
-          let from_unit = AreaUnit::with_value(message.value, &message.from);
-          let to_unit = AreaUnit::from_symbol(&message.to);
-
-          from_unit.to(to_unit).value()
+          convert::<AreaUnit>(
+            message.value, 
+            &message.from,
+            &message.to
+          )
         },
         "temperature" => {
-          let from_unit = TemperatureUnit::with_value(message.value, &message.from);
-          let to_unit = TemperatureUnit::from_symbol(&message.to);
-
-          from_unit.to(to_unit).value()
+          convert::<TemperatureUnit>(
+            message.value,
+            &message.from,
+            &message.to
+          )
         },
         "volume" => {
-          let from_unit = VolumeUnit::with_value(message.value, &message.from);
-          let to_unit = VolumeUnit::from_symbol(&message.to);
-
-          from_unit.to(to_unit).value()
+          convert::<VolumeUnit>(
+            message.value,
+            &message.from,
+            &message.to
+          )
         },
         "mass" => {
-          let from_unit = MassUnit::with_value(message.value, &message.from);
-          let to_unit = MassUnit::from_symbol(&message.to);
-
-          from_unit.to(to_unit).value()
+          convert::<MassUnit>(
+            message.value,
+            &message.from,
+            &message.to
+          )
         },
         _ => panic!("Inavlid quantity type")
       };
@@ -72,4 +78,11 @@ async fn handle_conversion() -> Result<()> {
       ConvertResult { value: result }.send_signal_to_dart();
     }
     Ok(())
+}
+
+fn convert<T: QuantityUnit>(value: f64, from_sym: &str, to_sym: &str) -> f64 {
+  let from_unit = T::with_value(value, from_sym);
+  let to_unit = T::from_symbol(to_sym);
+
+  from_unit.to(to_unit).value()
 }
