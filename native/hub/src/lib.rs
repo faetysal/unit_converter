@@ -70,6 +70,13 @@ async fn handle_conversion() -> Result<()> {
             &message.to
           )
         },
+        "data" => {
+          convert::<DataUnit>(
+            message.value,
+            &message.from,
+            &message.to
+          )
+        },
         _ => panic!("Inavlid quantity type")
       };
 
