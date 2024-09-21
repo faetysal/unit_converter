@@ -8,6 +8,7 @@ pub mod temperature;
 pub mod volume;
 pub mod mass;
 pub mod data;
+pub mod speed;
 
 // trait Number: Copy + Add + Sub + Mul + Div {}
 

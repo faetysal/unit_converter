@@ -77,6 +77,13 @@ async fn handle_conversion() -> Result<()> {
             &message.to
           )
         },
+        "speed" => {
+          convert::<SpeedUnit>(
+            message.value,
+            &message.from,
+            &message.to
+          )
+        },
         _ => panic!("Inavlid quantity type")
       };
 

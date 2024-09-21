@@ -8,7 +8,8 @@ pub use quantity::{
   temperature::TemperatureUnit,
   volume::VolumeUnit,
   mass::MassUnit,
-  data::DataUnit
+  data::DataUnit,
+  speed::SpeedUnit
 };
 
 fn secs_to_mins(x: f64) -> f64{
