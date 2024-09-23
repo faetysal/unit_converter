@@ -27,7 +27,17 @@ class Home extends StatelessWidget {
         type: QuantityType.length,
       ),
       Quantity(id: 2, title: 'Area', icon: HugeIcons.strokeRoundedBoundingBox, type: QuantityType.area),
-      Quantity(id: 3, title: 'Temperature', icon: HugeIcons.strokeRoundedTemperature, type: QuantityType.temperature),
+      Quantity(
+        id: 3,
+        title: 'Temperature',
+        icon: HugeIcons.strokeRoundedTemperature,
+        type: QuantityType.temperature,
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(
+            RegExp(r'^-?(\d+(\.(\d+)?)?)?')
+          )
+        ]
+      ),
       Quantity(id: 4, title: 'Volume', icon: HugeIcons.strokeRoundedDroplet, type: QuantityType.volume),
       Quantity(id: 5, title: 'Mass', icon: HugeIcons.strokeRoundedWeightScale01, type: QuantityType.mass),
       Quantity(id: 6, title: 'Data', icon: HugeIcons.strokeRoundedDatabase, type: QuantityType.data),
@@ -268,7 +278,7 @@ class Home extends StatelessWidget {
                   onPressed: () => controller.moveFocusUp()
                 ),
 
-                _buildInputBtn(text: '+/-'),
+                _buildInputBtn(text: '+/-', onPressed: () => controller.toggleNegative()),
                 _buildInputBtn(text: '0'),
                 _buildInputBtn(text: '.'),
                 _buildInputBtn(
@@ -364,6 +374,7 @@ class HomeController extends GetxController {
     fromCtrl.addListener(() {
       if (fromFocus.hasFocus && prevInputVal != fromCtrl.text) {
         if (fromCtrl.text.isNotEmpty) {
+          if (fromCtrl.text == '-') return;
           handleConversion(fromCtrl.text);
         } else {
           toCtrl.text = '';
@@ -383,6 +394,7 @@ class HomeController extends GetxController {
     toCtrl.addListener(() {
       if (toFocus.hasFocus && prevInputVal != toCtrl.text) {
         if (toCtrl.text.isNotEmpty) {
+          if (toCtrl.text == '-') return;
           handleConversion(toCtrl.text);
         } else {
           fromCtrl.text = '';
@@ -441,6 +453,21 @@ class HomeController extends GetxController {
       prevInputVal = inputCtrl.text;
       inputCtrl.selection = TextSelection.fromPosition(TextPosition(offset: position - 1));
     }
+  }
+
+  void toggleNegative() {
+    final inputCtrl = activeField.$1;
+    final value = inputCtrl.text;
+
+    if (value.contains('-')) {
+      final suffix = value.substring(1, value.length);
+      inputCtrl.text = suffix;
+    } else {
+      const prefix = '-';
+      inputCtrl.text = prefix + value;
+    }
+
+    prevInputVal = inputCtrl.text;
   }
 
   void clear() {

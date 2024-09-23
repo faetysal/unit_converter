@@ -12,9 +12,10 @@ class Quantity {
     int? id,
     this.title = '',
     this.icon,
-    this.type = QuantityType.none
+    this.type = QuantityType.none,
+    List<TextInputFormatter>? inputFormatters
   }):  _id = id,
-      inputFormatters = [
+      inputFormatters = inputFormatters ?? [
         FilteringTextInputFormatter.allow(
           RegExp(r'^\d+(\.\d*)?')
         )
