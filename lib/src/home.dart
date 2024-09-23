@@ -278,7 +278,11 @@ class Home extends StatelessWidget {
                   onPressed: () => controller.moveFocusUp()
                 ),
 
-                _buildInputBtn(text: '+/-', onPressed: () => controller.toggleNegative()),
+                _buildInputBtn(
+                  text: '+/-', 
+                  onPressed: () => controller.toggleNegative(),
+                  disabled: controller.quantityType.value != QuantityType.temperature
+                ),
                 _buildInputBtn(text: '0'),
                 _buildInputBtn(text: '.'),
                 _buildInputBtn(
@@ -298,14 +302,16 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _buildInputBtn({String? text, Color? color,  Widget? child, void Function()? onPressed}) {
+  Widget _buildInputBtn({String? text, Color? color,  Widget? child, void Function()? onPressed, bool disabled = false}) {
     HomeController controller = Get.find();
 
     return Material(
       color: Colors.grey[200],
       borderRadius: BorderRadius.circular(8),
       child: InkWell(
-        onTap: onPressed ?? () => controller.input(text!),
+        onTap: disabled
+          ? null
+          : onPressed ?? () => controller.input(text!),
         borderRadius: BorderRadius.circular(8),
         // splashColor: Colors.teal[50],
         child: Container(
@@ -321,7 +327,9 @@ class Home extends StatelessWidget {
           child: child ?? Center(child: Text(text ?? '', style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
-            color: color ?? Colors.grey[700]
+            color: disabled
+              ? Colors.grey[400]
+              : color ?? Colors.grey[700]
           ))),
         )
       )
