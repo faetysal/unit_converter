@@ -284,7 +284,7 @@ class Home extends StatelessWidget {
                   disabled: controller.quantityType.value != QuantityType.temperature
                 ),
                 _buildInputBtn(text: '0'),
-                _buildInputBtn(text: '.'),
+                _buildInputBtn(text: '.', onPressed: () => controller.dot()),
                 _buildInputBtn(
                   child: Icon(
                     HugeIcons.strokeRoundedArrowDown02,
@@ -476,6 +476,28 @@ class HomeController extends GetxController {
     }
 
     prevInputVal = inputCtrl.text;
+  }
+
+  void dot() {
+    final inputCtrl = activeField.$1;
+    var value = inputCtrl.text;
+    final position = inputCtrl.selection.base.offset;
+
+    if (!value.contains('.')) {
+      var suffix = value.substring(position, value.length);
+      String dot = '.';
+      int offset = position + 1;
+      if (position == 0) {
+        dot = '0.';
+        offset += 1;
+      }
+      value = value.substring(0, position) + dot + suffix;
+
+      inputCtrl.text = value;
+      prevInputVal = value;
+      inputCtrl.selection = TextSelection.fromPosition(TextPosition(offset: offset));
+    }
+
   }
 
   void clear() {
