@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Quantity {
   final int? _id;
   String title;
   IconData? icon;
   QuantityType type;
+  List<TextInputFormatter>? inputFormatters;
 
   Quantity({
     int? id,
     this.title = '',
     this.icon,
     this.type = QuantityType.none
-  }): _id = id;
+  }):  _id = id,
+      inputFormatters = [
+        FilteringTextInputFormatter.allow(
+          RegExp(r'^\d+(\.\d*)?')
+        )
+      ];
 
   int? get id => _id;
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
@@ -23,7 +24,7 @@ class Home extends StatelessWidget {
         id: 1,
         title: 'Length',
         icon: HugeIcons.strokeRoundedRuler,
-        type: QuantityType.length
+        type: QuantityType.length,
       ),
       Quantity(id: 2, title: 'Area', icon: HugeIcons.strokeRoundedBoundingBox, type: QuantityType.area),
       Quantity(id: 3, title: 'Temperature', icon: HugeIcons.strokeRoundedTemperature, type: QuantityType.temperature),
@@ -133,7 +134,11 @@ class Home extends StatelessWidget {
                                   Expanded(
                                     child: Container(
                                       // height: 60,
-                                      child: _buildInputField(inputController: controller.fromCtrl, focusNode: controller.fromFocus)
+                                      child: _buildInputField(
+                                        inputController: controller.fromCtrl, 
+                                        focusNode: controller.fromFocus,
+                                        inputFormatters: quantities.firstWhere((q) => q.type == controller.quantityType.value).inputFormatters
+                                      )
                                     ),
                                   ),
                                   const SizedBox(width: 8),
@@ -196,7 +201,11 @@ class Home extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      child: _buildInputField(inputController: controller.toCtrl, focusNode: controller.toFocus),
+                                      child: _buildInputField(
+                                        inputController: controller.toCtrl, 
+                                        focusNode: controller.toFocus,
+                                        inputFormatters: quantities.firstWhere((q) => q.type == controller.quantityType.value).inputFormatters
+                                      ),
                                     )
                                   ),
                                   const SizedBox(width: 8),
@@ -309,9 +318,13 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _buildInputField({required TextEditingController inputController, required FocusNode focusNode}) {
+  Widget _buildInputField({
+    required TextEditingController inputController, 
+    required FocusNode focusNode,
+    List<TextInputFormatter>? inputFormatters}) {
     return TextField(
       controller: inputController,
+      inputFormatters: inputFormatters,
       focusNode: focusNode,
       style: const TextStyle(
         fontSize: 22,
