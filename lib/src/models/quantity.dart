@@ -18,7 +18,8 @@ class Quantity {
       inputFormatters = inputFormatters ?? [
         FilteringTextInputFormatter.allow(
           RegExp(r'^\d+(\.\d*)?')
-        )
+        ),
+        LengthLimitingTextInputFormatter(15)
       ];
 
   int? get id => _id;

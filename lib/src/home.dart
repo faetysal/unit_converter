@@ -442,6 +442,9 @@ class HomeController extends GetxController {
     final position = inputCtrl.selection.base.offset;
     var value = inputCtrl.text;
 
+    final count = RegExp(r'\d').allMatches(value).length;
+    if (count >= 15) return;
+
     var suffix = value.substring(position, value.length);
     value = value.substring(0, position) + char + suffix;
 
