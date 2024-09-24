@@ -441,9 +441,21 @@ class HomeController extends GetxController {
     final inputCtrl = activeField.$1;
     final position = inputCtrl.selection.base.offset;
     var value = inputCtrl.text;
+    int dotPos = value.indexOf('.');
 
     final count = RegExp(r'\d').allMatches(value).length;
     if (count >= 15) return;
+
+    if (value.contains('.')) {
+      final fracMatch = RegExp(r'\.(\d+)').firstMatch(value);
+      if (fracMatch != null) {
+        final fracLen = fracMatch[1]!.length;
+
+        if (dotPos > 0 && position > dotPos && fracLen >= 10) return;
+      }
+    }
+
+
 
     var suffix = value.substring(position, value.length);
     value = value.substring(0, position) + char + suffix;
