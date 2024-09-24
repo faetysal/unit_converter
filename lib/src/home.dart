@@ -155,10 +155,21 @@ class Home extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 8),
-                                  Text(controller.fromUnit.value.symbol, style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600
-                                  ))
+                                  RichText(
+                                    text: TextSpan(
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black
+                                      ),
+                                      children: [
+                                        TextSpan(text: controller.fromUnit.value.symbol), 
+                                        TextSpan(text: controller.fromUnit.value.sup ?? '', style: TextStyle(
+                                          fontFeatures: [FontFeature.superscripts()]
+                                        ))
+                                      ]
+                                    )
+                                  )
                                 ],
                               ),
                             )
@@ -191,7 +202,19 @@ class Home extends StatelessWidget {
                                     items: controller.quantityType.value.units.map((u) {
                                       return DropdownMenuItem(
                                         value: u,
-                                        child: Text('${u.title} (${u.symbol})'), 
+                                        child: RichText(
+                                          text: TextSpan(
+                                            style: TextStyle(color: Colors.black),
+                                            children: [
+                                              TextSpan(text: u.title),
+                                              TextSpan(text: ' (${u.symbol}'),
+                                              TextSpan(text: u.sup ?? '', style: TextStyle(
+                                                fontFeatures: [FontFeature.superscripts()]
+                                              )),
+                                              TextSpan(text: ')')
+                                            ]
+                                          )
+                                        )
                                       );
                                     }).toList(),
                                     onChanged: (v) {
@@ -225,10 +248,21 @@ class Home extends StatelessWidget {
                                     )
                                   ),
                                   const SizedBox(width: 8),
-                                  Text(controller.toUnit.value.symbol, style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600
-                                  ))
+                                  RichText(
+                                    text: TextSpan(
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black
+                                      ),
+                                      children: [
+                                        TextSpan(text: controller.toUnit.value.symbol), 
+                                        TextSpan(text: controller.toUnit.value.sup ?? '', style: TextStyle(
+                                          fontFeatures: [FontFeature.superscripts()]
+                                        ))
+                                      ]
+                                    )
+                                  )
                                 ],
                               )
                             )
