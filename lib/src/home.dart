@@ -125,6 +125,9 @@ class Home extends StatelessWidget {
                                     }).toList(),
                                     onChanged: (v) {
                                       controller.fromUnit.value = v!;
+                                      controller.activeField.$2.requestFocus();
+                                      final unitVal = controller.activeField.$1.text;
+                                      controller.handleConversion(unitVal);
                                     },
                                     isDense: true,
                                     dropdownStyleData: DropdownStyleData(
@@ -193,6 +196,9 @@ class Home extends StatelessWidget {
                                     }).toList(),
                                     onChanged: (v) {
                                       controller.toUnit.value = v!;
+                                      controller.activeField.$2.requestFocus();
+                                      final unitVal = controller.activeField.$1.text;
+                                      controller.handleConversion(unitVal);
                                     },
                                     isDense: true,
                                     dropdownStyleData: DropdownStyleData(
