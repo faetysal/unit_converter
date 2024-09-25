@@ -390,6 +390,7 @@ class Home extends StatelessWidget {
       ),
       textAlign: TextAlign.end,
       keyboardType: TextInputType.none,
+      enableInteractiveSelection: false,
       decoration: const InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.zero,
@@ -465,6 +466,7 @@ class HomeController extends GetxController {
   void init() {
     fromUnit = quantityType.value.units.first.obs;
     toUnit = quantityType.value.units[1].obs;
+    // activeField = (fromCtrl, fromFocus);
     clear();
   }
 
@@ -494,8 +496,6 @@ class HomeController extends GetxController {
         if (dotPos > 0 && position > dotPos && fracLen >= 10) return;
       }
     }
-
-
 
     var suffix = value.substring(position, value.length);
     value = value.substring(0, position) + char + suffix;
