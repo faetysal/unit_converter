@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
@@ -17,7 +18,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeController controller = Get.put(HomeController());
+    HomeController controller = Get.put(HomeController(context));
 
     List<Quantity> quantities = [
       Quantity(
@@ -416,6 +417,9 @@ class HomeController extends GetxController {
   late (TextEditingController, FocusNode) activeField;
   int convOrder = 1; // 1: top to bottom, -1: reverse
 
+  HomeController(this.context);
+  BuildContext context;
+
   @override
   void onInit() {
     super.onInit();
@@ -486,14 +490,28 @@ class HomeController extends GetxController {
     int dotPos = value.indexOf('.');
 
     final count = RegExp(r'\d').allMatches(value).length;
-    if (count >= 15) return;
+    if (count >= 15) {
+      showToast(
+        'Max. of 15 digits allowed.', 
+        context: context,
+        animDuration: Duration.zero
+      );
+      return;
+    }
 
     if (value.contains('.')) {
       final fracMatch = RegExp(r'\.(\d+)').firstMatch(value);
       if (fracMatch != null) {
         final fracLen = fracMatch[1]!.length;
 
-        if (dotPos > 0 && position > dotPos && fracLen >= 10) return;
+        if (dotPos > 0 && position > dotPos && fracLen >= 10) {
+          showToast(
+            'Up to 10 digits allowed after decimal point.',
+            context: context,
+            animDuration: Duration.zero
+          );
+          return;
+        }
       }
     }
 
@@ -546,6 +564,17 @@ class HomeController extends GetxController {
         dot = '0.';
         offset += 1;
       }
+
+      // final fracMatch = RegExp(r'\.(\d+)').firstMatch(value);
+      if (suffix.length > 10) {
+        showToast(
+          'Up to 10 digits allowed after decimal point.',
+          context: context,
+          animDuration: Duration.zero
+        );
+        return;
+      }
+
       value = value.substring(0, position) + dot + suffix;
 
       inputCtrl.text = value;
