@@ -3,11 +3,19 @@
 Unit converter app built with `Rust` and `Flutter`. It allows for conversion of values from one unit to another.
 
 ## Screenshots
-<img src="screenshots/iphone_se_1.png" height="350" />
-<img src="screenshots/iphone_se_2.png" height="350" />
-<img src="screenshots/iphone_1.png" height="350" />
-<img src="screenshots/iphone_2.png" height="350" />
-<img src="screenshots/ipad_1.png" height="350" />
+<table>
+  <tr>
+    <td><img src="screenshots/iphone_se_1.png" height="350" /></td>
+    <td><img src="screenshots/iphone_se_2.png" height="350" /></td>
+    <td><img src="screenshots/iphone_1.png" height="350" /></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td><img src="screenshots/iphone_2.png" height="350" /></td>
+    <td><img src="screenshots/ipad_1.png" height="350" /></td>
+  </tr>
+</table>
 
 ## Available Units
 
