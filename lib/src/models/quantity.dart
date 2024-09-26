@@ -63,7 +63,7 @@ enum QuantityType {
     QuantityUnit(title: 'Cubic feet', symbol: 'ft', sup: '3'),
   ]),
   mass([
-    QuantityUnit(title: 'Tons', symbol: 't'),
+    QuantityUnit(title: 'Tonnes', symbol: 't'),
     QuantityUnit(title: 'UK tons', symbol: 't', uSym: 'uk_t'),
     QuantityUnit(title: 'US tons', symbol: 't', uSym: 'us_t'),
     QuantityUnit(title: 'Pounds', symbol: 'lb'),

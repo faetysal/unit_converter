@@ -1,59 +1,90 @@
-# unit_converter
+# Unit Converter
 
-A new Flutter project.
+Unit converter app built with `Rust` and `Flutter`. It allows for conversion of values from one unit to another.
 
-## Getting Started
+## Screenshots
+<img src="screenshots/iphone_se_1.png" height="350" />
+<img src="screenshots/iphone_se_2.png" height="350" />
+<img src="screenshots/iphone_1.png" height="350" />
+<img src="screenshots/iphone_2.png" height="350" />
+<img src="screenshots/ipad_1.png" height="350" />
 
-This project is a starting point for a Flutter application.
+## Available Units
 
-A few resources to get you started if this is your first Flutter project:
+### Length
+- Millimetres
+- Centimetres
+- Metres
+- Kilometres
+- Inches
+- Feet
+- Yards
+- Miles
+- Nautical miles
+- Mils
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Area
+- Acres
+- Ares
+- Hectares
+- Square centimetres
+- Square feet
+- Square inches
+- Square metres
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Temperature
+- Celcius
+- Fahrenheit
+- Kelvin
 
-## Using Rust Inside Flutter
+### Volume
+- UK gallons
+- US gallons
+- Litres
+- Millilitres
+- Cubic centimetres
+- Cubic metres
+- Cubic inches
+- Cubic feet
 
-This project leverages Flutter for GUI and Rust for the backend logic,
-utilizing the capabilities of the
-[Rinf](https://pub.dev/packages/rinf) framework.
+### Mass
+- Tonnes
+- UK tons
+- US tons
+- Pounds
+- Ounces
+- Kilogrammes
+- Grams
 
-To run and build this app, you need to have
-[Flutter SDK](https://docs.flutter.dev/get-started/install)
-and [Rust toolchain](https://www.rust-lang.org/tools/install)
-installed on your system.
-You can check that your system is ready with the commands below.
-Note that all the Flutter subcomponents should be installed.
+### Data
+- Bits
+- Bytes
+- Kilobytes
+- Kibibytes
+- Megabytes
+- Mebibytes
+- Gigabytes
+- Gibibytes
+- Terabytes
+- Tebibytes
 
-```bash
-rustc --version
-flutter doctor
-```
+### Speed
+- Metres per second
+- Metres per hour
+- Kilometres per second
+- Kilometres per hour
+- Inches per second
+- Inches per hour
+- Feet per second
+- Feet per hour
+- Miles per second
+- Miles per hour
+- Knots
 
-You also need to have the CLI tool for Rinf ready.
-
-```bash
-cargo install rinf
-```
-
-Messages sent between Dart and Rust are implemented using Protobuf.
-If you have newly cloned the project repository
-or made changes to the `.proto` files in the `./messages` directory,
-run the following command:
-
-```bash
-rinf message
-```
-
-Now you can run and build this app just like any other Flutter projects.
-
-```bash
-flutter run
-```
-
-For detailed instructions on writing Rust and Flutter together,
-please refer to Rinf's [documentation](https://rinf.cunarist.com).
-
+### Time
+- Milliseconds
+- Seconds
+- Minutes
+- Hours
+- Days
+- Weeks
